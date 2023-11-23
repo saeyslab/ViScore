@@ -2,6 +2,8 @@
 
 ViScore is a toolkit for evaluation of dimensionality reduction.
 
+**It is published together with [ViVAE](https://github.com/saeyslab/ViVAE), a toolkit for single-cell data denoising and dimensionality reduction.**
+
 ## Installation
 
 ViScore is a Python package.
