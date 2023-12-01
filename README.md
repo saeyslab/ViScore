@@ -15,6 +15,7 @@ On Windows, use Anaconda Prompt.
 ```
 conda create --name ViScore python=3.9 \
     numpy numba scikit-learn scipy pynndescent matplotlib pyemd
+pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 ```
 
 ## Usage
