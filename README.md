@@ -7,7 +7,7 @@ ViScore is a toolkit for evaluation of dimensionality reduction.
 ## Installation
 
 ViScore is a Python package.
-We recommend creating a new Anaconda environment for ViScore.
+We recommend creating a new Anaconda environment for ViScore (or using [the one you already created for *ViVAE*](https://github.com/saeyslab/ViVAE#installation)!).
 
 On Linux or macOS, use the command line for installation.
 On Windows, use Anaconda Prompt.
