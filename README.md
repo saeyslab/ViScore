@@ -17,7 +17,7 @@ On Windows, use Anaconda Prompt.
 ### Stand-alone *ViScore* installation
 
 ```
-conda create --name ViScore python=3.9 \
+conda create --name ViScore --channel conda-forge python=3.9 \
     numpy==1.22.4 numba==0.58.1 scikit-learn==1.3.2 scipy==1.11.4 pynndescent==0.5.11 matplotlib==3.8.2 pyemd==1.0.0
 conda activate ViScore
 pip install --upgrade git+https://github.com/saeyslab/ViScore.git
