@@ -12,7 +12,7 @@ We recommend creating a new Anaconda environment for ViScore, or using the one y
 On Linux or macOS, use the command line for installation.
 On Windows, use Anaconda Prompt.
 
-*(A test install run on 2020 MacBook Air runs under 1 minutes.)*
+*(A test install run on 2020 MacBook Air runs for under 1 minute.)*
 
 ### Stand-alone *ViScore* installation
 
