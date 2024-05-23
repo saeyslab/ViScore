@@ -39,9 +39,9 @@ RNX curves show (scaled) overlap between neighbour ranks for all neighbourhoods 
 
 ![RNX curve illustration](./rnx_curve_plot.png)
 
-Taking the Area-Under-Curve with *log* scale for *K* (neighbourhood size), we effectively up-weight the significance of local neighbourhoods, *without* setting a hard cut-off for what is still considered local. This is the **local structure-preservation score** $S_{L}$.
+- Taking the AUC (Area-Under-Curve) with *logarithmic* scale for *K* (neighbourhood size), we effectively up-weight the significance of local neighbourhoods, *without* setting a hard cut-off for what is still considered local. This is the **local structure-preservation score** $S_{L}$.
 
-Taking the Area-Under-Curve with linear scale for *K*, we dispense with the locality bias and assume equal importance for all neighbourhood scales. This is the **global structure-preservation score** $S_{G}$.
+- Taking the AUC with linear scale for *K*, we dispense with the locality bias and assume equal importance for all neighbourhood scales. This is the **global structure-preservation score** $S_{G}$.
 
 ## Example with scRNA-seq data
 
