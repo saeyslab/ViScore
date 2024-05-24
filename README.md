@@ -32,7 +32,7 @@ See documentation for `ViScore.score`, `ViScore.xnpe`, `ViScore.neighbourhood_co
 
 ## Objective structure-preservation scoring
 
-ViScore enables unsupervised assessment of structure preservation in LD embeddings of HD data using scores based on RNX curves.
+ViScore enables unsupervised assessment of structure preservation in LD embeddings of HD data using scores based on $R_{NX}$ curves.
 This is an objective approach based on quantifying neighbourhood preservation between HD and LD for all neighbourhood scales.
 
 RNX curves show (scaled) overlap between neighbour ranks for all neighbourhoods of size from 1 to N-1.
@@ -42,6 +42,9 @@ RNX curves show (scaled) overlap between neighbour ranks for all neighbourhoods 
 - Taking the AUC (Area-Under-Curve) with *logarithmic* scale for *K* (neighbourhood size), we effectively up-weight the significance of local neighbourhoods, *without* setting a hard cut-off for what is still considered local. This is the **local structure-preservation score** $S_{L}$.
 
 - Taking the AUC with linear scale for *K*, we dispense with the locality bias and assume equal importance for all neighbourhood scales. This is the **global structure-preservation score** $S_{G}$.
+
+This is implemented in `ViScore.score`.
+The scRNA-seq example below includes an application of this.
 
 ## Example with scRNA-seq data
 
