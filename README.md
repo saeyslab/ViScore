@@ -43,6 +43,8 @@ RNX curves show (scaled) overlap between neighbour ranks for all neighbourhoods 
 
 - Taking the AUC with linear scale for *K*, we dispense with the locality bias and assume equal importance for all neighbourhood scales. This is the **global structure-preservation score** $S_{G}$.
 
+Since the computation of an $R_{NX}$ curve has quadratic complexity, this approach is largely impractical impossible to apply to larger single-cell datasets.
+We circumvent this limitation by approximating the $R_{NX}$ curve using a repeated vantage point tree-based sampling approach.
 This is implemented in `ViScore.score`.
 The scRNA-seq example below includes an application of this.
 
