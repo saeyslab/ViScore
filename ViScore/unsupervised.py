@@ -26,16 +26,21 @@ def score(
     Compute structure preservation scores
 
     Computes the RNX-curve-based local (Sl) and global (Sg) structure-preservation scores
-    for a lower-dimensional embedding of a high-dimensional dataset.
+    for a lower-dimensional embedding of a high-dimensional dataset. The RNX curve itself
+    is also returned.
 
     Sl is the area under the RNX curve, with neighbourhood size re-scaled logarithmically.
 
     Sg is the area under the RNX curve, with neighbourhood size scaled linearly.
 
+
     - hd:     high-dimensional (non-reduced) coordinate matrix (np.ndarray)
     - ld:     low-dimensional (reduced) coordinate matrix (np.ndarray)
+
+    Returns:
+        List with 'Sl', 'Sg' and 'RNX' (all NumPy arrays).
     """
-    auc = fast_eval_dr_quality(
+    s = fast_eval_dr_quality(
         X_hd    = hd,
         X_ld    = ld,
         dist_hd = eucl_dist,
@@ -45,7 +50,8 @@ def score(
         pow2K   = False,
         vp_samp = True
     )
-    Sl = auc[3]
-    Sg = auc[2]
-    return {'Sl': Sl, 'Sg': Sg}
+    Sl = s[3]
+    Sg = s[2]
+    RNX = s[1]
+    return {'Sl': Sl, 'Sg': Sg, 'RNX': RNX}
 
