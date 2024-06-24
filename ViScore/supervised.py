@@ -310,7 +310,7 @@ def xnpe(
     annot:               Union[np.ndarray, list],
     knn:                 Optional[Union[np.ndarray, list]] = None,
     knn_ld:              Optional[np.ndarray] = None,
-    k:                   Optional[Union[int, List[int]]] = None,
+    k:                   Optional[int] = None,
     baseline_correction: bool = True,
     exclude_pops:        List = [],
     reduce:              Optional[str] = None
@@ -340,7 +340,7 @@ def xnpe(
     - annot:               1-d array of string population labels per row of `hd`, `ld`
     - knn:                 matrix of row-wise k-nearest-neighbour indices for `hd` (0-indexed and including self), or output of `make_knn` (list of index and distance matrix)
     - knn_ld:              optional k-NN indices for ld
-    - k:                   neighbourhood size (up to number of columns of knn minus one) or a list of multiple neighbourhood sizes
+    - k:                   neighbourhood size (up to number of columns of knn minus one)
     - baseline_correction: whether to re-scale each score so that 1~baseline (random embedding)
     - exclude_pops:        list of populations names from annot to exclude from scoring
     - reduce:              reduction method for the returned value ('sum', 'average' or None)
@@ -373,8 +373,8 @@ def xnpe(
         k = knn.shape[1]-1
 
     ## Get distributions in HD and LD
-    distr_hd          = likeness_distributions(coords=hd, annot=annot, knn=knn, k=k)
-    distr_ld          = likeness_distributions(coords=ld, annot=annot, knn=knn_ld, k=k)
+    distr_hd = likeness_distributions(coords=hd, annot=annot, knn=knn, k=k)
+    distr_ld = likeness_distributions(coords=ld, annot=annot, knn=knn_ld, k=k)
 
     if baseline_correction:
         ## Compute a baseline distribution for random embedding
