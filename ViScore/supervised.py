@@ -328,7 +328,7 @@ def xnpe(
     If baseline correction is turned off, the xNPE score for each population
     is bounded by 0 and 1.
 
-    we use Earth mover's distance (EMD) instead of total variation distance
+    We use Earth mover's distance (EMD) instead of total variation distance
     for computing differences between distributions of like-vs-unlike samples
     in local neighbourhoods.
     
@@ -421,6 +421,53 @@ def xnpe(
     elif reduce == 'average':
         return np.mean(np.array(list(d.values())))
 
+def plot_xnpe_barplot(
+    res:       list,
+    res_names: list,
+    palette:   list = PALETTE,
+    figsize:   tuple = (6, 4),
+    dpi:       int = 120,
+    fname:     Optional[str] = None
+):
+    """
+    Plot xNPE results as a bar plot
+
+    - res:       xNPE results from one or more methods evaluated on the same dataset (list)
+    - res_names: names of methods for which the results were generated (list)
+    - palette:   optional non-default palette of hex codes for colours per each labelled population (list)
+    - figsize:    tuple specifying width and height of plot in inches (tuple)
+    - dpi:       pixel density per inch if figure saved (int)
+    - fname:     optional name of file to save the figure (str)
+    """
+    n_res = len(res)
+    pops = list(res[0].keys())
+
+    if len(res_names)!=n_res:
+        raise ValueError('`res` and `res_names` must be of same length')
+    if n_res>1:
+        for i in range(1, n_res):
+            if list(res[i].keys())!=pops:
+                raise ValueError('Dict names must be the same across all `res` items')
+
+    fig, ax = plt.subplots(figsize=figsize)
+
+    x_pos = []
+    x_name = []
+    for i, pop in enumerate(pops):
+        for j in range(n_res):##
+            ax.bar(x=i*(n_res+1)+j, height=list(res[j].values())[i], color=palette[j], edgecolor='#363636', linewidth=1., label=res_names[j] if i==0 else None)
+        x_pos.append(i*(n_res+1)+((n_res+1)/2-1))
+        x_name.append(pop)
+    ax.set_xticks(x_pos, x_name, rotation=90)
+    ax.set_xlabel('Population')
+    ax.set_ylabel('xNPE')
+    l = fig.legend()
+    
+    if fname is not None:
+        fig.savefig(fname, dpi=dpi, bbox_extra_artists=(l,), bbox_inches='tight')
+
+    plt.show()
+
 def plot_xnpe_map(
     proj:       np.ndarray,
     annot:      np.ndarray,
@@ -462,7 +509,7 @@ def plot_xnpe_map(
             s = 1.0
     
     ## Arrange subplots
-    fig, (ax1, ax2, cax) = plt.subplots(1, 3, figsize=figsize, gridspec_kw={'width_ratios': [20, 20, 1]})
+    fig, (ax1, ax2, cax) = plt.subplots(1, 3, figsize=figsize, gridspec_kw={'width_ratios': [20, 20, 2]})
     fig.subplots_adjust(top=6.0)
 
     ## Create array of xNPE values per point (population-wise values)
