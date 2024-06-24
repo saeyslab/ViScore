@@ -26,9 +26,7 @@ SOFTWARE.
 """
 
 """
-Extended Neighbourhood Proportion Error:
-
-Copyright 2023 David Novak
+Copyright 2024 David Novak
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -44,7 +42,7 @@ limitations under the License.
 """
 
 import numpy as np
-from typing import Optional, Union
+from typing import Optional, Union, List
 from pyemd import emd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -95,12 +93,46 @@ def annot_to_int(annot: np.ndarray):
         d[keys[idx]] = idx
     return np.array([d[pop] for pop in annot])
 
+def baseline_likeness_distributions(
+    annot: np.ndarray,
+    k:     int = 1000,
+    pop:   Optional[str] = None
+):
+    """
+    Compute population-wise distributions of counts of nearest neighbours
+    to each vantage point that have the same label as the vantage point,
+    under the assumption that coordinates of points are random
+
+    - annot: array of string labels per point (np.ndarray)
+    - k:     neighbourhood size (int)
+    """
+    annot_unique = np.unique(annot)
+    n = len(annot)
+
+    if pop is None:
+        distr_per_pop = {}
+        for p in annot_unique:
+            p_count = np.sum(annot==p)
+            p_proportion = p_count/n
+            d = np.histogram(np.repeat(p_proportion*k, repeats=p_count), bins=k+1, range=(0, k))[0]
+            ds = np.sum(d)
+            d = np.array([x/ds for x in d])
+            distr_per_pop.update({p: d})
+        return distr_per_pop
+    else:
+        p_count = np.sum(annot==pop)
+        p_proportion = p_count/n
+        d = np.histogram(np.repeat(p_proportion*k, repeats=p_count), bins=k+1, range=(0, k))[0]
+        ds = np.sum(d)
+        d = np.array([x/ds for x in d])
+        return d
+
 def likeness_distributions(
     coords: np.ndarray,
     annot:  np.ndarray,
     knn:    Optional[Union[np.ndarray, list]],
     pop:    Optional[str] = None,
-    k:      int = 50
+    k:      int = 1000
 ):
     """
     Compute population-wise distributions of counts of nearest neighbours
@@ -119,7 +151,7 @@ def likeness_distributions(
     else:
         if isinstance(knn, list):
             knn = knn[0]
-        elif len(knn.shape) == 3:
+        elif len(knn.shape)==3:
             knn = knn[0,:,:]
         knn = knn[:,range(k)]
 
@@ -129,11 +161,14 @@ def likeness_distributions(
     ## Get counts of same-population neighbours for each point
     labs_per_row = annot_int[knn]
     same_per_row = [np.sum(lab==lab[0])-1 for lab in labs_per_row]
-    same_per_row_per_pop = [np.array(same_per_row)[np.where(annot_int==pop)[0]] for pop in range(len(annot_unique))]
+    same_per_row_by_pop = [
+        np.array(same_per_row)[np.where(annot_int==pop)[0]] for pop in range(len(annot_unique))
+    ]
     
     ## Get distribution of same-population counts for each population
-    distr_per_pop = [np.array([np.sum(same_per_row_per_pop[idx_pop] == idx_neighbour) for idx_neighbour in np.arange(0, k+1)]) for idx_pop in range(len(annot_unique))]
-    distr_per_pop = [x / np.max([1, np.sum(x)]) for x in distr_per_pop]
+    #distr_per_pop = [np.array([np.sum(same_per_row_by_pop[idx_pop] == idx_neighbour) for idx_neighbour in np.arange(0, k+1)]) for idx_pop in range(len(annot_unique))]
+    distr_per_pop = [np.histogram(x, bins=k+1, range=(0, k))[0] for x in same_per_row_by_pop]
+    distr_per_pop = [x/np.max([1, np.sum(x)]) for x in distr_per_pop]
     
     if pop is not None:
         idx = np.where(annot_unique == pop)[0][0]
@@ -270,33 +305,45 @@ def neighbourhood_composition_plot(
     return ax
 
 def xnpe(
-    hd:           np.ndarray,
-    ld:           np.ndarray,
-    annot:        Union[np.ndarray, list],
-    knn:          Union[np.ndarray, list],
-    knn_ld:       Optional[np.ndarray] = None,
-    k:            Optional[int] = None,
-    exclude_pops: list = [],
-    reduce:       Optional[str] = None
+    hd:                  np.ndarray,
+    ld:                  Optional[np.ndarray],
+    annot:               Union[np.ndarray, list],
+    knn:                 Optional[Union[np.ndarray, list]] = None,
+    knn_ld:              Optional[np.ndarray] = None,
+    k:                   Optional[Union[int, List[int]]] = None,
+    baseline_correction: bool = True,
+    exclude_pops:        List = [],
+    reduce:              Optional[str] = None
 ):
     """
-    Compute the Extended Neighbourhood Proportion Error (xNPE)
+    Compute xNPE (Extended Neighbourhood-Proportion-Error[s]) of an embedding
 
-    This is based on the Neighbourhood Propportion Error (NPE) but uses
-    Earth mover's distance instead of total variation distance for computing
-    differences between distributions of like-vs-unlike samples in local
-    neighbourhoods. Additionally, the summed or averaged score (scalar) can
-    be returned, or the unreduced vector of scores per sample population
-    can be returned instead.
+    xNPE is based on the Neighbourhood Propportion Error (NPE). While NPE
+    calculates a single unbounded score quantifying distortion of cell
+    populations in an embedding, xNPE calculates a bounded score that
+    quantifies these distortions for each population separately. A score
+    of 0 means perfect embedding, 1 is as good as a random baseline and
+    values above 1 are worse than the random baseline.
 
-    - hd:           original (high-dimensional) coordinate matrix
-    - ld:           projection (lower-dimensional) coordinate matrix
-    - annot:        1-d array of string population labels per row of `hd`, `ld`
-    - knn:          matrix of row-wise k-nearest-neighbour indices for `hd` (0-indexed and including self), or output of `make_knn` (list of index and distance matrix)
-    - knn_ld:       optional k-NN indices for ld
-    - k:            neighbourhood size (up to number of columns of knn minus one)
-    - exclude_pops: list of populations names from annot to exclude from scoring
-    - reduce:       reduction method for the returned value ('sum', 'average' or None)
+    If baseline correction is turned off, the xNPE score for each population
+    is bounded by 0 and 1.
+
+    we use Earth mover's distance (EMD) instead of total variation distance
+    for computing differences between distributions of like-vs-unlike samples
+    in local neighbourhoods.
+    
+    You can make the xNPE a bit more robust by computing it for multiple
+    neighbourhood sizes (use a list as argument to `k`).
+
+    - hd:                  original (high-dimensional) coordinate matrix
+    - ld:                  projection (lower-dimensional) coordinate matrix
+    - annot:               1-d array of string population labels per row of `hd`, `ld`
+    - knn:                 matrix of row-wise k-nearest-neighbour indices for `hd` (0-indexed and including self), or output of `make_knn` (list of index and distance matrix)
+    - knn_ld:              optional k-NN indices for ld
+    - k:                   neighbourhood size (up to number of columns of knn minus one) or a list of multiple neighbourhood sizes
+    - baseline_correction: whether to re-scale each score so that 1~baseline (random embedding)
+    - exclude_pops:        list of populations names from annot to exclude from scoring
+    - reduce:              reduction method for the returned value ('sum', 'average' or None)
     """
     
     if reduce is not None and reduce not in ['sum', 'average']:
@@ -305,36 +352,64 @@ def xnpe(
     if exclude_pops is not None and not isinstance(exclude_pops, list) and isinstance(exclude_pops, str):
         exclude_pops = [exclude_pops]
 
-    if isinstance(knn, list):
-        knn = knn[0]
-    elif len(knn.shape) == 3:
-        knn = knn[0,:,:]
-    knn = knn.astype(int)
+    ## Resolve k-NNG in HD
+    if knn is not None:
+        if isinstance(knn, list):
+            knn = knn[0]
+        elif len(knn.shape)==3:
+            knn = knn[0,:,:]
+        knn = knn.astype(int)
 
+    ## Resolve k-NNG in LD
     if knn_ld is not None:
         if isinstance(knn_ld, list):
             knn_ld = knn_ld[0]
-        elif len(knn_ld.shape) == 3:
+        elif len(knn_ld.shape)==3:
             knn_ld = knn_ld[0,:,:]
         knn_ld = knn_ld.astype(int)
 
-    if k is None:
+    ## Resolve common nearest-neighbour count
+    if k is None and knn is not None:
         k = knn.shape[1]-1
 
-    distr_hd = likeness_distributions(hd, annot, knn, k)
-    distr_ld = likeness_distributions(ld, annot, knn_ld, k)
+    ## Get distributions in HD and LD
+    distr_hd          = likeness_distributions(coords=hd, annot=annot, knn=knn, k=k)
+    distr_ld          = likeness_distributions(coords=ld, annot=annot, knn=knn_ld, k=k)
 
+    if baseline_correction:
+        ## Compute a baseline distribution for random embedding
+        distr_ld_baseline = baseline_likeness_distributions(annot=annot, k=k)
+
+    ## Compute the upper bound on error values
+    distr_upper_bound = np.linalg.norm(np.ones(k), ord=1)-1
+
+    ## Eliminate non-interesting populations (unlabelled cells?)
     pops = np.unique(annot)
-
-    if len(exclude_pops) > 0:
+    if len(exclude_pops)>0:
         for pop in exclude_pops:
             del distr_hd[pop]
             del distr_ld[pop]
             pops = np.delete(pops, np.argwhere(pops == pop))
 
+    ## Compute and re-scale EMDs per population
     d = {}
     for pop in pops:
-        d[pop] = emd(first_histogram=distr_hd[pop], second_histogram=distr_ld[pop], distance_matrix=simple_dist_mat(n=k+1))
+        pop_score = emd(
+            first_histogram =distr_hd[pop],
+            second_histogram=distr_ld[pop],
+            distance_matrix =simple_dist_mat(n=k+1)
+        )
+        pop_score /= distr_upper_bound
+        if baseline_correction:
+            baseline_score = emd(
+                first_histogram =distr_hd[pop],
+                second_histogram=distr_ld_baseline[pop],
+                distance_matrix =simple_dist_mat(n=k+1)
+            )
+            baseline_score /= distr_upper_bound
+            if baseline_score>0.:
+                pop_score /= baseline_score
+        d.update({pop: pop_score})
 
     if reduce is None:
         if len(exclude_pops) > 0:
@@ -359,7 +434,7 @@ def plot_xnpe_map(
     dpi:        int = 120
 ):
     """
-    Plot xNPE (extended Neighbourhood Proportion Error) per population
+    Plot xNPE per population
     as a low-dimensional embedding overlay, along with population labels
 
     - proj:       2-dimensional embedding row-wise coordinate matrix (np.ndarray)
