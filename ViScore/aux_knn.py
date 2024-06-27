@@ -155,3 +155,39 @@ def smooth(
                 res[i] = res[i] + vector*coef
         y = res
     return res
+
+def smooth(x: np.ndarray, knn: list, k: int = 50, coef: Optional[float] = 0.1, n_iter: int = 1) -> np.ndarray:
+    """Denoise data by smoothing
+
+    Args:
+        x (np.ndarray): Point coordinates.
+        knn (list): List of k-nearest-neighbour indices and distances.
+        k (int, optional): Nearest neighbour count for smoothing. Defaults to 50.
+        coef (Optional[float], optional): Smoothing lambda coefficient. Defaults to 0.1.
+        n_iter (int, optional): Number of smoothing iterations. Defaults to 1.
+
+    Returns:
+        np.ndarray: Smoothed point coordinates.
+    """
+
+    if k < 1 or k > (x.shape[0]-1):
+        raise ValueError('`k` must be between 1 and (n-1)')
+    if coef < 0. or coef > 1.:
+        raise ValueError('`coef` must be more than 0. and at most 1.')
+    if n_iter < 1 or n_iter > 10000:
+        raise ValueError('`n_iter` must be at least 1 and at most 10000')
+    knn = ensure_valid_knn(n=x.shape[0], knn=knn)
+
+    y = copy.deepcopy(x)
+    knn_idcs = knn[0].astype(np.int64)
+    res = y
+    for it in range(n_iter):
+        for i in range(x.shape[0]):
+            if coef is None:
+                res[i] = y[knn_idcs[i][range(k)]].mean(0)
+            else:
+                target = y[knn_idcs[i][range(k)]].mean(0)
+                vector = target - res[i]
+                res[i] = res[i] + vector*coef
+        y = res
+    return res
