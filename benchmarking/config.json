@@ -1,0 +1,418 @@
+{
+    "methods": {
+        "PCA": {
+            "venv": "sklearn",
+            "cluster": "CPU",
+            "package": "sklearn.decomposition",
+            "model_class": "PCA",
+            "init_args": {
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_components"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "UMAP": {
+            "venv": "UMAP",
+            "cluster": "CPU",
+            "package": "umap",
+            "model_class": "UMAP",
+            "init_args": {
+                "n_epochs": 500,
+                "n_neighbors": 15
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_components"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "DensMAP": {
+            "venv": "UMAP",
+            "cluster": "CPU",
+            "package": "umap",
+            "model_class": "UMAP",
+            "init_args": {
+                "n_epochs": 500,
+                "densmap": true,
+                "n_neighbors": 15
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_components"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "tSNE": {
+            "venv": "sklearn",
+            "cluster": "CPU",
+            "package": "sklearn.manifold",
+            "model_class": "TSNE",
+            "init_args": {
+                "perplexity": 30.0,
+                "method": "barnes_hut"
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_components"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "PaCMAP": {
+            "venv": "PaCMAP",
+            "cluster": "CPU",
+            "package": "pacmap",
+            "model_class": "PaCMAP",
+            "init_args": {
+                "apply_pca": true
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_components"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "TriMap": {
+            "venv": "TriMap",
+            "cluster": "CPU",
+            "package": "trimap",
+            "model_class": "TRIMAP",
+            "init_args": {
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_dims"
+            },
+            "seed_arg": {
+                "method": "",
+                "name": ""
+            },
+            "knn_arg": {
+                "method": "init",
+                "name": "knn_tuple",
+                "format": "tuple",
+                "k": ""
+            }
+        },
+        "SQuad-MDS": {
+            "venv": "SQuadMDS",
+            "cluster": "CPU",
+            "package": "SQuadMDS",
+            "model_class": "SQuadMDS",
+            "init_args": {
+                "tsne_hybrid": false
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "VAE": {
+            "venv": "ViVAE",
+            "cluster": "GPU",
+            "package": "ViVAE",
+            "model_class": "ViVAE",
+            "init_args": {
+            },
+            "fit_transform_args": {
+                "n_epochs": 100,
+                "batch_size": 512,
+                "lam_recon": 1.0,
+                "lam_kldiv": 1.0,
+                "lam_geom": 0.0,
+                "lam_egeom": 0.0,
+                "lam_mds": 0.0,
+                "verbose": true 
+            },
+            "xdim_arg": {
+                "method": "init",
+                "name": "input_dim"
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "latent_dim"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "ivis": {
+            "venv": "ivis",
+            "cluster": "GPU",
+            "package": "ivis",
+            "model_class": "Ivis",
+            "init_args": {
+                "epochs": 100,
+                "batch_size": 512,
+                "k": 150
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "embedding_dims"
+            },
+            "seed_arg": {
+                "method": "",
+                "name": ""
+            },
+            "knn_arg": {
+                "method": "init",
+                "name": "neighbour_matrix",
+                "format": "array",
+                "k": ""
+            }
+        },
+        "SAUCIE": {
+            "venv": "SAUCIE",
+            "cluster": "GPU",
+            "package": "SaucieDimRed",
+            "model_class": "DimRed",
+            "init_args": {
+                "lambda_c": 0.2,
+                "lambda_d": 0.4
+            },
+            "fit_transform_args": {
+                "steps": 1000
+            },
+            "xdim_arg": {
+                "method": "init",
+                "name": "input_dim"
+            },
+            "zdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "seed_arg": {
+                "method": "",
+                "name": ""
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "ViVAE": {
+            "venv": "ViVAE",
+            "cluster": "GPU",
+            "package": "ViVAE",
+            "model_class": "ViVAE",
+            "init_args": {
+            },
+            "fit_transform_args": {
+                "n_epochs": 100,
+                "batch_size": 512,
+                "lam_recon": 1.0,
+                "lam_kldiv": 1.0,
+                "lam_geom": 0.0,
+                "lam_egeom": 0.0,
+                "lam_mds": 100.0,
+                "mds_nsamp": 4,
+                "verbose": true 
+            },
+            "xdim_arg": {
+                "method": "init",
+                "name": "input_dim"
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "latent_dim"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "ViVAE-Geometric": {
+            "venv": "ViVAE",
+            "cluster": "GPU",
+            "package": "ViVAE",
+            "model_class": "ViVAE",
+            "init_args": {
+            },
+            "fit_transform_args": {
+                "n_epochs": 100,
+                "batch_size": 512,
+                "lam_recon": 1.0,
+                "lam_kldiv": 1.0,
+                "lam_geom": 100.0,
+                "lam_egeom": 0.0,
+                "lam_mds": 100.0,
+                "mds_nsamp": 4,
+                "verbose": true 
+            },
+            "xdim_arg": {
+                "method": "init",
+                "name": "input_dim"
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "latent_dim"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
+        "ViVAE-EncoderOnly": {
+            "venv": "ViVAE",
+            "cluster": "GPU",
+            "package": "ViVAE",
+            "model_class": "ViVAE",
+            "init_args": {
+            },
+            "fit_transform_args": {
+                "n_epochs": 100,
+                "batch_size": 512,
+                "lam_recon": 0.0,
+                "lam_kldiv": 1.0,
+                "lam_geom": 0.0,
+                "lam_egeom": 0.0,
+                "lam_mds": 10.0,
+                "mds_nsamp": 4,
+                "verbose": true 
+            },
+            "xdim_arg": {
+                "method": "init",
+                "name": "input_dim"
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "latent_dim"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        }
+    }
+}

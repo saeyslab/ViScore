@@ -1,0 +1,2 @@
+PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
+numba/0.58.1-foss-2023a
