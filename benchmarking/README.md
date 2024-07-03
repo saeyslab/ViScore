@@ -5,7 +5,19 @@ This is a scalable framework for benchmarking dimensionality reduction (DR) usin
 We used this framework to systematically compare [ViVAE](https://github.com/saeyslab/ViVAE) to other DR methods in Python.
 We used [scRNA-seq data](https://learn.gencore.bio.nyu.edu/single-cell-rnaseq/), but the workflow generalises to any tabular data.
 
-### Running large benchmarks locally or on an HPC
+#### Table of contents <!-- omit in toc -->
+1. [Running large benchmarks](#large-benchmarks)
+2. [Preparing benchmark datasets](#preparing-datasets)
+3. [Configuring a benchmark](#configuring-benchmark)
+4. [Evaluating a specific DR method](#specific-method)
+5. [Migrating to HPC and benchmarking](#hpc-benchmark)
+6. [Reporting results](#reporting)
+7. [*ViVAE* benchmark specifications](#vivae-benchmark)
+8. [Limitations of this framework ](#limitations)
+
+<a name="large-benchmarks"></a>
+
+## **1.** Running large benchmarks 
 
 ViScore is very easy to use directly with any DR embeddings, and we provide [code examples](https://colab.research.google.com/drive/1eNpgH_TzbCSu-_4ZPmK7tk6It4BYK5sh?usp=sharing) to do so.
 **We also give instructions on running a benchmark locally (on your own machine) throughout this tutorial.**
@@ -16,7 +28,9 @@ You will need to adapt some code to get things running, but we did most of the w
 
 **This framework is written for a Unix(-like) OS (Linux, macOS) with Bash (>=3.2) and [`jq`](https://jqlang.github.io/jq/).**
  
-## 1. Preparing benchmark datasets
+<a name="preparing-datasets"></a>
+ 
+## **2.** Preparing benchmark datasets 
 
 The easiest way to acquire high-quality scRNA-seq data is to download it from a database (eg. [CELLxGENE](https://cellxgene.cziscience.com) or [Single Cell Portal](https://singlecell.broadinstitute.org/single_cell)).
 
@@ -46,25 +60,33 @@ The *k*-NNG construction is done so as to provide a pre-computed graph to method
 De-noising is designed for ViVAE, but any DR method can be tested with de-noised inputs.
 In that case, if the method requires a *k*-NNG, the one constructed on de-noised data will be provided.
 
-### 1a. Preparing datasets locally
+<a name="preparing-datasets-locally"></a>
+
+### **2a.** Preparing datasets locally
 
 To prepare datasets on your local machine, you will need a Python environment with `numpy`, `pandas`, `ViScore` and [`scanpy`](https://github.com/scverse/scanpy/tree/ad657edfb52e9957b9a93b3a16fc8a87852f3f09) installed.
 
 * To prepare a dataset of interest step-by-step, use `00_prepare_dataset.ipynb`.
 * To download and prepare multiple CELLxGENE datasets, run `00_prepare_datasets.py`, which reads from `datasets.csv`.
 
-### 1b. Preparing datasets on HPC
+<a name="preparing-datasets-hpc"></a>
+
+### **2b.** Preparing datasets on HPC
 
 You can also use the HPC to prepare your datasets.
-In that case, take a look at `datasets.csv`, add links and names to datasets you want to use in your benchmark and proceed further through the tutorial; instructions on dataset preparation will be given in section 4.
+In that case, take a look at `datasets.csv`, add links and names to datasets you want to use in your benchmark and proceed further through the tutorial; instructions on dataset preparation will be given in [section 5](#hpc-benchmark).
 
-## 2. Configuring a benchmark
+<a name="configuring-benchmark"></a>
+
+## **3.** Configuring a benchmark
 
 * `config.json` specifies how to use each DR method in Python.
 * Files in `./install` specify [environment modules](https://modules.readthedocs.io/en/latest/) and required Python modules to run each DR method.
 * `datasets.txt` lists all datasets to use in a benchmark by their name.
 
-### `config.json`
+<a name="config"></a>
+
+### **3a.** `config.json`
 
 We use `config.json` to set up hyperparameters for each tested method.
 This is already set up for you, but you can modify or extend it.
@@ -106,11 +128,15 @@ If that is not the case, you need to provide a wrapper.)
 Make sure that you do not hard-code target embedding dimensionality (`zdim_arg`) or random seed (`seed_arg`) values in the `init_args` or `fit_transform_args`.
 Also consider using the `knn_arg` specification to pass a pre-computed *k*-nearest-neighbour graph to your method (if your method needs one and allows you to compute it yourself up front).
 
-### `datasets.txt`
+<a name="datasetstxt"></a>
+
+### **3b.** `datasets.txt`
 
 `datasets.txt` contains names of datasets to include in the benchmark, separated by newlines.
 
-### `install/...`
+<a name="install"></a>
+
+### **3c.** `install/...`
 
 Each method listed in `config.json` specifies a `venv` ([virtual environment](https://docs.python.org/3/library/venv.html)) to use.
 Each virtual environment needs instructions for installing required Python modules in it: these need to be in the corresponding `./install/${venv}_install.sh` file.
@@ -126,7 +152,9 @@ Typically, environment modules with at least a specific Python version and a cor
 
 **If you are running your benchmark locally, leave `_environment` files empty and define the full installation procedure in `_install` files.**
 
-## 3. Evaluating a method locally
+<a name="specific-method"></a>
+
+## **4.** Evaluating a specific DR method
 
 If you do not have access to an HPC, or you want to test your set-up first (always a good idea), you can already run a method and score it locally.
 
@@ -162,7 +190,9 @@ Then, after running `02b_score_method.py`, you will also find:
 
 These results can be visualised in informative plots (see section 5).
 
-## 4. Migrating to HPC and benchmarking
+<a name="hpc-benchmark"></a>
+
+## **5.** Migrating to HPC and benchmarking
 
 With your benchmark set up, you can migrate your files to the HPC and schedule all benchmarking jobs.
 
@@ -249,14 +279,52 @@ scp \
   ./data
 ```
 
-## 5. Reporting results
+<a name="reporting"></a>
+
+## **6.** Reporting results
 
 Once your benchmark is done, you can copy results back onto your local machine and generate informative plots, using `04_report.ipynb`.
 In addition to `numpy`, `pandas`, `matplotlib` and `ViScore` you will need [`funkyheatmappy`](https://github.com/funkyheatmap/funkyheatmappy), [`scipy`](https://github.com/scipy/scipy) and [`adjustText`](https://github.com/Phlya/adjustText).
 
 The workflow is annotated, and you might want to customise some graphical elements to fit your needs.
 
-## Limitations
+<a name="vivae-benchmark"></a>
+
+## **7.** *ViVAE* benchmark specifications
+
+In our ViVAE paper, we report results of a benchmark that we run using this framework, with default arguments to the scripts.
+In addition to the datasets in `datasets.csv` and `datasets.txt`, we use two additional interesting datasets that are not on CELLxGENE.
+
+### **7a.** *Shekhar* mouse retina dataset
+
+This dataset comprises profiles of 44,994 cells from mouse retina.
+We picked this dataset because it includes a wide range of annotated populations and it includes a known batch effect, which causes some embeddings to mis-embed some cell populations by exaggerating the technical source variation, relative to biological variation.
+
+We downloaded this dataset using the [`scRNAseq` R package](https://www.bioconductor.org/packages/release/data/experiment/html/scRNAseq.html).
+We converted it from a `SingleCellExperiment` object to an H5 readable as a Python `AnnData` object, using `scDIOR`[https://github.com/JiekaiLab/scDIOR].
+
+**Citation:** Shekhar, K., Lapan, S. W., Whitney, I. E., Tran, N. M., Macosko, E. Z., Kowalczyk, M., … Sanes, J. R. (8 2016). *Comprehensive Classification of Retinal Bipolar Neurons by Single-Cell Transcriptomics*. Cell, 166, 1308-1323.e30. doi:10.1016/j.cell.2016.07.054
+
+### **7b.** *Farrell* zebrafish embryo dataset
+
+This dataset comprises profiles of 38,731 cells gathered from zebrafish embryos.
+We picked this dataset because it includes annotation of ordered developmental stages represented by different cells.
+This annotation helps us visualise the gradient from progenitors toward increasingly differentiated cells.
+This is an example where the preservation of continuity in trajectories is arguably at least as important as local structure preservation, in order to create a faithful embedding of the expression data.
+
+We downloaded this dataset from the Broad Institute [Single Cell Portal](https://singlecell.broadinstitute.org/single_cell) using accession code `SCP162`.
+
+**Citation:** Farrell, J. A., Wang, Y., Riesenfeld, S. J., Shekhar, K., Regev, A., & Schier, A. F. (6 2018). *Single-cell reconstruction of developmental trajectories during zebrafish embryogenesis*. Science, 360. doi:10.1126/science.aar3131
+
+### **7c.** Pre-processing of additional datasets
+
+We pre-process the Shekhar and Farrell datasets using the same methodology as for the other ones, except that we **normalise and log-scale the Shekhar data** first.
+This is because we are provided raw counts.
+To do this, see `00_prepare_dataset.ipynb` and in section 2, set `counts = True`.
+
+<a name="limitations"></a>
+
+## **8.** Limitations of this framework
 
 We are aware of the following limitations of our framework.
 If you use our framework and find yourself having to address them, we welcome your pull requests.
