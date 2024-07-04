@@ -213,8 +213,8 @@
             "init_args": {
             },
             "fit_transform_args": {
-                "n_epochs": 100,
-                "batch_size": 512,
+                "n_epochs": 50,
+                "batch_size": 1024,
                 "lam_recon": 1.0,
                 "lam_kldiv": 1.0,
                 "lam_geom": 0.0,
@@ -247,8 +247,8 @@
             "package": "ivis",
             "model_class": "Ivis",
             "init_args": {
-                "epochs": 100,
-                "batch_size": 512,
+                "epochs": 50,
+                "batch_size": 1024,
                 "k": 150
             },
             "fit_transform_args": {
@@ -272,37 +272,6 @@
                 "k": ""
             }
         },
-        "SAUCIE": {
-            "venv": "SAUCIE",
-            "cluster": "GPU",
-            "package": "SaucieDimRed",
-            "model_class": "DimRed",
-            "init_args": {
-                "lambda_c": 0.2,
-                "lambda_d": 0.4
-            },
-            "fit_transform_args": {
-                "steps": 1000
-            },
-            "xdim_arg": {
-                "method": "init",
-                "name": "input_dim"
-            },
-            "zdim_arg": {
-                "method": "",
-                "name": ""
-            },
-            "seed_arg": {
-                "method": "",
-                "name": ""
-            },
-            "knn_arg": {
-                "method": "",
-                "name": "",
-                "format": "",
-                "k": ""
-            }
-        },
         "ViVAE": {
             "venv": "ViVAE",
             "cluster": "GPU",
@@ -311,8 +280,8 @@
             "init_args": {
             },
             "fit_transform_args": {
-                "n_epochs": 100,
-                "batch_size": 512,
+                "n_epochs": 50,
+                "batch_size": 1024,
                 "lam_recon": 1.0,
                 "lam_kldiv": 1.0,
                 "lam_geom": 0.0,
@@ -348,8 +317,8 @@
             "init_args": {
             },
             "fit_transform_args": {
-                "n_epochs": 100,
-                "batch_size": 512,
+                "n_epochs": 50,
+                "batch_size": 1024,
                 "lam_recon": 1.0,
                 "lam_kldiv": 1.0,
                 "lam_geom": 100.0,
@@ -385,8 +354,8 @@
             "init_args": {
             },
             "fit_transform_args": {
-                "n_epochs": 100,
-                "batch_size": 512,
+                "n_epochs": 50,
+                "batch_size": 1024,
                 "lam_recon": 0.0,
                 "lam_kldiv": 1.0,
                 "lam_geom": 0.0,

@@ -55,7 +55,7 @@ The outputs, for `${OUT}` being the output directory and `${DAT}` the name of a 
 * `${OUT}/${DAT}_knn_denoised_time.npy`: time to build *k*-NNG on de-noised inputs (in seconds)
 
 The *k*-NNG construction is done so as to provide a pre-computed graph to methods that use it.
-(When reporting running times, we need to be fair in reporting that the *k*-NNG construction was done up front.)
+(When reporting running times, we need to be include *k*-NNG construction where applicable.)
 
 De-noising is designed for ViVAE, but any DR method can be tested with de-noised inputs.
 In that case, if the method requires a *k*-NNG, the one constructed on de-noised data will be provided.
@@ -331,10 +331,8 @@ If you use our framework and find yourself having to address them, we welcome yo
 
 * **`sklearn`-like API requirement.**
 Each method used needs to have a model class with a constructor and `.fit_transform` method.
-In other cases, a wrapper is needed (we use custom wrappers for [SQuad-MDS](https://github.com/davnovak/SQuad-MDS) and [SAUCIE](https://github.com/davnovak/SAUCIE)).
-* **Running time of *k*-NNG construction needs to be tested separately.**
-For this, a lower *k* than our default (1000) will be more representative.
-The reason we pick such a high number is for use with `ViScore.xnpe` in the scoring phase.
+In other cases, a wrapper is needed (we use a custom wrapper for [SQuad-MDS](https://github.com/davnovak/SQuad-MDS) already).
+* **Running time of *k*-NNG construction needs to be measured separately and added where necessary.**
 * **Embeddings of unseen points not tested here.**
 We could test the performance of `.fit`ting on a training set and `.transform`ing a test set for methods which allow it as part of the benchmark, but currently we do not.
 * **Hyperparameter optimisation not included.**
