@@ -309,43 +309,6 @@
                 "k": ""
             }
         },
-        "ViVAE-Geometric": {
-            "venv": "ViVAE",
-            "cluster": "GPU",
-            "package": "ViVAE",
-            "model_class": "ViVAE",
-            "init_args": {
-            },
-            "fit_transform_args": {
-                "n_epochs": 50,
-                "batch_size": 1024,
-                "lam_recon": 1.0,
-                "lam_kldiv": 1.0,
-                "lam_geom": 100.0,
-                "lam_egeom": 0.0,
-                "lam_mds": 100.0,
-                "mds_nsamp": 4,
-                "verbose": true 
-            },
-            "xdim_arg": {
-                "method": "init",
-                "name": "input_dim"
-            },
-            "zdim_arg": {
-                "method": "init",
-                "name": "latent_dim"
-            },
-            "seed_arg": {
-                "method": "init",
-                "name": "random_state"
-            },
-            "knn_arg": {
-                "method": "",
-                "name": "",
-                "format": "",
-                "k": ""
-            }
-        },
         "ViVAE-EncoderOnly": {
             "venv": "ViVAE",
             "cluster": "GPU",
