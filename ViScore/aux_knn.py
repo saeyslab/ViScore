@@ -71,21 +71,24 @@ def correct_knn_for_duplicates(
     return knn
 
 
-def make_knn(
-    x:       Optional[np.ndarray] = None,
-    fname:   Optional[str] = None,
-    k:       int = 100,
-    verbose: bool = True
-):
-    """
-    Construct a k-nearest-neighbour graph
+def make_knn(x: Optional[np.ndarray] = None, fname: Optional[str] = None, k: int = 100, as_tuple: bool = False, random_state: Optional[int] = None, verbose: bool = True) -> List:
+    """Construct or load a k-NNG
 
-    This function uses the approximate algorithm implemented in `pynndescent` to construct a k-NNG.
+    Construct a k-nearest-neighbour graph object with NN indices and coordinates.
 
-    - x:       coordinate matrix (np.ndarray)
-    - fname:   name of .npy file to save new k-NNG or to load an existing one (str/None)
-    - k:       nearest neighbour count (int)
-    - verbose: print message (whether k-NNG is constructed or loaded)? (bool)
+    Args:
+        x (Optional[np.ndarray], optional): Point coordinates to build k-NNG on top of. Defaults to None.
+        fname (Optional[str], optional): Path to k-NNG file for saving/loading. Defaults to None.
+        k (int, optional): Nearest neighbour count. Defaults to 100.
+        as_tuple (bool, optional): Whether to return a tuple of NumPy arrays, instead of list. Defaults to False.
+        random_state (int, optional): Random state for PyNNDescent to make the result reproducible. Default to None.
+        verbose (bool, optional): Whether to print progress messages. Defaults to True.
+
+    Returns:
+        if `as_tuple` is True:
+            tuple: tuple of neighbour indices and distances.
+        else:
+            List: List of neighbour indices and distances.
     """
 
     if k < 1 or k > (x.shape[0]-1):
@@ -98,15 +101,19 @@ def make_knn(
         knn_idcs = np.array(res[0], dtype=np.int64)
         knn_dist = np.array(res[1])
         knn = [knn_idcs, knn_dist]
+        if as_tuple:
+            knn = tuple(knn)
         return knn
     else:
         if verbose:
             print('Constructing k-NNG')
-        knn_index = pynndescent.NNDescent(x, n_neighbors=k+1)
+        knn_index = pynndescent.NNDescent(x, n_neighbors=k+1, random_state=random_state)
         knn_tuple = knn_index.query(x, k=k+1)
         knn = [knn_tuple[0].astype(np.int64), knn_tuple[1]]
         if not np.all([knn[0][idx,0]==idx for idx in range(x.shape[0])]):
             knn = correct_knn_for_duplicates(knn)
+        if as_tuple:
+            knn = tuple(knn)
         if fname is not None:
             np.save(fname, knn)
         return knn

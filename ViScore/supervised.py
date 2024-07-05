@@ -128,24 +128,26 @@ def baseline_likeness_distributions(
         return d
 
 def likeness_distributions(
-    coords: np.ndarray,
-    annot:  np.ndarray,
-    knn:    Optional[Union[np.ndarray, list]],
-    pop:    Optional[str] = None,
-    k:      int = 1000
+    coords:       np.ndarray,
+    annot:        np.ndarray,
+    knn:          Optional[Union[np.ndarray, list]],
+    pop:          Optional[str] = None,
+    k:            int = 1000,
+    random_state: Optional[int] = None
 ):
     """
     Compute population-wise distributions of counts of nearest neighbours
     to each vantage point that have the same label as the vantage point
 
-    - coords: matrix of row-wise coordinates (np.ndarray)
-    - annot:  corresponding array of string labels per row of `coords` (np.ndarray)
-    - knn:    optional k-NN indices of `coords`, created with `ViScore.make_knn` (list/np.ndarray)
-    - pop:    optional name of population if there is only one population of interest (str)
-    - k:      neighbourhood size (int)
+    - coords:       matrix of row-wise coordinates (np.ndarray)
+    - annot:        corresponding array of string labels per row of `coords` (np.ndarray)
+    - knn:          optional k-NN indices of `coords`, created with `ViScore.make_knn` (list/np.ndarray)
+    - pop:          optional name of population if there is only one population of interest (str)
+    - k:            neighbourhood size (int)
+    - random_state: random seed for PyNNDescent if k-NNG needs to be constructed
     """
     if knn is None:
-        knn = make_knn(x=coords, fname=None, k=k, verbose=False)
+        knn = make_knn(x=coords, fname=None, k=k, verbose=False, random_state=random_state)
         knn = knn[0]
         knn = knn.astype(int)
     else:
@@ -182,12 +184,13 @@ def likeness_distributions(
         return res
 
 def neighbourhood_composition(
-        X:        np.ndarray,
-        pop:      str,
-        annot:    np.ndarray,
-        k:        int = 1000,
-        stepsize: int = 10,
-        exclude:  Optional[list] = None
+        X:            np.ndarray,
+        pop:          str,
+        annot:        np.ndarray,
+        k:            int = 1000,
+        stepsize:     int = 10,
+        exclude:      Optional[list] = None,
+        random_state: Optional[int] = None
 ):
     """
     Compute neighbourhood composition of a population in terms of labelled neighbours
@@ -201,12 +204,13 @@ def neighbourhood_composition(
     (3) array of counts per population per segment, (4) array of proportions
     per population per segment and (5) bin indices.
 
-    - X:        coordinate matrix (np.ndarray)
-    - pop:      single population of interest (str)
-    - annot:    labels per point (np.ndarray)
-    - k:        neighbourhood size (int)
-    - stepsize: size of bin to aggregate over (int)
-    - exclude:  optional populations to exclude from the count (list)
+    - X:            coordinate matrix (np.ndarray)
+    - pop:          single population of interest (str)
+    - annot:        labels per point (np.ndarray)
+    - k:            neighbourhood size (int)
+    - stepsize:     size of bin to aggregate over (int)
+    - exclude:      optional populations to exclude from the count (list)
+    - random_state: optional random seed for PyNNDescent (int)
     """
 
     ## Query points: self
@@ -228,7 +232,7 @@ def neighbourhood_composition(
     X_ref      = X[idcs_ref]
     annot_ref  = annot[idcs_ref]
     pops_ref   = np.unique(annot_ref)
-    index      = pynndescent.NNDescent(X_ref)
+    index      = pynndescent.NNDescent(X_ref, random_state=random_state)
     knn        = index.query(X_query, k=k)[0]
 
     ## Bin by neighbourhood ranks
@@ -313,7 +317,8 @@ def xnpe(
     k:                   Optional[int] = None,
     baseline_correction: bool = True,
     exclude_pops:        List = [],
-    reduce:              Optional[str] = None
+    reduce:              Optional[str] = None,
+    random_state:        Optional[int] = None
 ):
     """
     Compute xNPE (Extended Neighbourhood-Proportion-Error[s]) of an embedding
@@ -344,6 +349,7 @@ def xnpe(
     - baseline_correction: whether to re-scale each score so that 1~baseline (random embedding)
     - exclude_pops:        list of populations names from annot to exclude from scoring
     - reduce:              reduction method for the returned value ('sum', 'average' or None)
+    - random_state:        random seed for PyNNDescent if k-NNG needs to be computed
     """
     
     if reduce is not None and reduce not in ['sum', 'average']:
@@ -373,15 +379,15 @@ def xnpe(
         k = knn.shape[1]-1
 
     ## Get distributions in HD and LD
-    distr_hd = likeness_distributions(coords=hd, annot=annot, knn=knn, k=k)
-    distr_ld = likeness_distributions(coords=ld, annot=annot, knn=knn_ld, k=k)
+    distr_hd = likeness_distributions(coords=hd, annot=annot, knn=knn, k=k, random_state=random_state)
+    distr_ld = likeness_distributions(coords=ld, annot=annot, knn=knn_ld, k=k, random_state=random_state)
 
     if baseline_correction:
         ## Compute a baseline distribution for random embedding
         distr_ld_baseline = baseline_likeness_distributions(annot=annot, k=k)
 
     ## Compute the upper bound on error values
-    distr_upper_bound = k #(np.linalg.norm(np.ones(k), ord=1))
+    distr_upper_bound = k # (np.linalg.norm(np.ones(k), ord=1))
 
     ## Eliminate non-interesting populations (unlabelled cells?)
     pops = np.unique(annot)
