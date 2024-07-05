@@ -381,7 +381,7 @@ def xnpe(
         distr_ld_baseline = baseline_likeness_distributions(annot=annot, k=k)
 
     ## Compute the upper bound on error values
-    distr_upper_bound = np.linalg.norm(np.ones(k), ord=1)-1
+    distr_upper_bound = k #(np.linalg.norm(np.ones(k), ord=1))
 
     ## Eliminate non-interesting populations (unlabelled cells?)
     pops = np.unique(annot)
