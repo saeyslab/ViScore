@@ -18,7 +18,7 @@ import os
 import pynndescent # approximate k-NNG construction
 import numpy as np
 import copy
-from typing import Optional,Union
+from typing import Optional,Union, List
 
 def ensure_valid_knn(
     n:   int,
