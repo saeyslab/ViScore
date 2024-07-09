@@ -314,6 +314,8 @@ This is an example where the preservation of continuity in trajectories is argua
 
 We downloaded this dataset from the Broad Institute [Single Cell Portal](https://singlecell.broadinstitute.org/single_cell) using accession code `SCP162`.
 
+We also used `URD_Dropseq_Meta.txt` to extract information about developmental trajectories in the data for a case study in the ViVAE paper.
+
 **Citation:** Farrell, J. A., Wang, Y., Riesenfeld, S. J., Shekhar, K., Regev, A., & Schier, A. F. (6 2018). *Single-cell reconstruction of developmental trajectories during zebrafish embryogenesis*. Science, 360. doi:10.1126/science.aar3131
 
 ### **7c.** Pre-processing of additional datasets
