@@ -339,7 +339,7 @@ In other cases, a wrapper is needed (we use a custom wrapper for [SQuad-MDS](htt
 We could test the performance of `.fit`ting on a training set and `.transform`ing a test set for methods which allow it as part of the benchmark, but currently we do not.
 * **Hyperparameter optimisation not included.**
 This would grow the benchmark massively, so we choose fixed hyperparameter settings.
-However, you can easily set up your `config.json` file to test multiple configurations of the same algorithm!
+However, you can easily set up your `config.json` file to test multiple configurations of the same algorithm.
 * **Limited to Python.**
 Some amazing DR methods are not implemented in Python (eg. [EmbedSOM](https://bioinfo.uochb.cas.cz/embedsom/), [destiny](https://bioconductor.org/packages/release/bioc/html/destiny.html)), therefore cannot included in this benchmark yet.
 * **No special treatment for deterministic algorithms.**
