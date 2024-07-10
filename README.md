@@ -1,6 +1,6 @@
 <img src="./ViScore_logo_small.png" alt="ViScore" width="450"/>
 
-ViScore is a toolkit for evaluating and benchmarking dimensionality reduction.
+ViScore (*vee-score*) is a toolkit for evaluating and benchmarking dimensionality reduction.
 
 It is published together with [ViVAE](https://github.com/saeyslab/ViVAE), a tool for single-cell data denoising and dimensionality reduction.
 
