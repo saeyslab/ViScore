@@ -2,6 +2,8 @@
 
 **Corresponding author:** [David Novak](https://github.com/davnovak)
 
+**Corresponding citation (will soon be updated with revised version):** Novak, D., de Bodt, C., Lambert, P., Lee, J. A., Van Gassen, S., & Saeys, Y. (2023). A framework for quantifiable local and global structure preservation in single-cell dimensionality reduction. bioRxiv. doi:10.1101/2023.11.23.568428
+
 This document will guide you through the deployment of single-cell dimensionality reduction benchmarks on an HPC cluster.
 
 #### Table of contents <!-- omit in toc -->
@@ -12,7 +14,7 @@ This document will guide you through the deployment of single-cell dimensionalit
 4. [Running a full benchmark on an HPC cluster](#hpc-benchmark)
 5. [Reporting results](#reporting)
 6. [*ViVAE* benchmark specifications](#vivae-benchmark)
-7. [Limitations of this framework ](#limitations)
+7. [Limitations of this framework](#limitations)
 
 <a name="introduction"></a>
 
@@ -223,7 +225,7 @@ These results can be visualised in informative plots (see section 5).
 
 <a name="hpc-benchmark"></a>
 
-## **4.** Migrating to HPC and benchmarking
+## **4.** Running a full benchmark on an HPC cluster
 
 With your benchmark set up, you can migrate your files to the HPC and schedule all benchmarking jobs.
 
