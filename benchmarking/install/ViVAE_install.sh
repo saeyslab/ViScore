@@ -8,5 +8,5 @@ pip install --no-input \
     pynndescent==0.5.11 \
     scikit-learn==1.4.0 \
     scanpy==1.9.8
-pip install --no-input git+https://github.com/saeyslab/FlowSOM_Python.git
+#pip install --no-input git+https://github.com/saeyslab/FlowSOM_Python.git@80529c6b7a1747e8e71042102ac8762c3bfbaa1b
 pip install --no-input --use-pep517 git+https://github.com/saeyslab/ViVAE.git
