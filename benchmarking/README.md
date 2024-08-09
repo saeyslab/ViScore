@@ -55,6 +55,8 @@ We also give instructions on running the benchmark locally throughout this tutor
 However, larger evaluations should be run on HPC clusters.
 This framework is mainly for users with access to one.
 
+<img src="schematic.png" />
+
 You will need to adapt some code to get things running with your set-up, but we did most of the work for you.
 
 **This framework is written for a Unix(-like) OS (Linux, macOS) with Bash (>=3.2) and [`jq`](https://jqlang.github.io/jq/).**

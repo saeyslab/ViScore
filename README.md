@@ -56,7 +56,7 @@ This is an objective approach based on quantifying neighbourhood preservation be
 
 RNX curves show (scaled) overlap between neighbour ranks for all neighbourhoods of size from 1 to N-1.
 
-<img src="./rnx_curve_plot.png" alt="RNX curve" width="650"/>
+<img src="./rnx_curve_plot.png" alt="RNX curve" width="450"/>
 
 * Taking the AUC (Area-Under-Curve) with *logarithmic* scale for *K* (neighbourhood size), we effectively up-weight the significance of local neighbourhoods, *without* setting a hard cut-off for what is still considered local. This is the **Local SP score** (SL).
 
@@ -71,6 +71,8 @@ This is implemented in `ViScore.score`.
 ## Benchmarking
 
 You can find our documented benchmarking set-up for comparing DR methods on scRNA-seq data in the [`benchmarking` directory](https://github.com/saeyslab/ViScore/blob/main/benchmarking).
+
+<img src="benchmarking/schematic.png" />
 
 ## Pre-print
 
