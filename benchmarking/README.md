@@ -67,7 +67,7 @@ This can be omitted.
 <hr>
 </details>
 
-ViScore is easy to use directly on your local machine with any DR embeddings, and we provide [code examples](https://colab.research.google.com/drive/1eNpgH_TzbCSu-_4ZPmK7tk6It4BYK5sh?usp=sharing) to do so.
+ViScore is easy to use directly on your local machine with any DR embeddings, and we provide [code examples](https://github.com/saeyslab/ViVAE/blob/main/example_scrnaseq.ipynb) to do so.
 We also give instructions on running the benchmark locally throughout this tutorial.
 However, larger evaluations should be run on HPC clusters.
 This framework is mainly for users with access to one.
