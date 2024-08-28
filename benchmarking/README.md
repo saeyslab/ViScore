@@ -41,6 +41,7 @@ The embedding task is hard mainly due to high numbers of features: *eg.* tens of
 The evaluation task is hard mainly due to increasing numbers of cells measured in single-cell experiments: nowadays, experiments can include hundreds of thousands or millions of cells.
 The [Open Problems in Single-Cell Analysis page](https://openproblems.bio/results/dimensionality_reduction/) offers more context.
 
+<hr>
 </details>
 
 <details>
@@ -52,6 +53,7 @@ We introduced an algorithm for the efficient approximation of *RNX curves*, whic
 This is key, because RNX curves were not applicable to large datasets prior to this, due to high computational complexity.
 Now we have an objective scoring method which quantifies local and global structure preservation, separately.
 
+<hr>
 </details>
 
 <details>
@@ -62,6 +64,7 @@ We have shown that our ViVAE algorithm works better if a simple nearest-neighbou
 To isolate the effect of denoising, we run each method with non-denoised and denoised inputs, to see whether the denoising improves results for other methods.
 This can be omitted.
 
+<hr>
 </details>
 
 ViScore is easy to use directly on your local machine with any DR embeddings, and we provide [code examples](https://colab.research.google.com/drive/1eNpgH_TzbCSu-_4ZPmK7tk6It4BYK5sh?usp=sharing) to do so.
@@ -111,6 +114,7 @@ The *k*-NNG construction is done so as to provide a pre-computed graph to method
 De-noising is designed for ViVAE, but any DR method can be tested with de-noised inputs.
 In that case, if the method requires a *k*-NNG, the one constructed on de-noised data will be provided.
 
+<hr>
 </details>
 
 <details>
@@ -122,6 +126,7 @@ To prepare datasets on your local machine, you will need a Python environment wi
 * To prepare a dataset of interest step-by-step, use `00_prepare_dataset.ipynb`.
 * To download and prepare multiple CELLxGENE datasets, run `00_prepare_datasets.py`, which reads from `datasets.csv`.
 
+<hr>
 </details>
 
 <details>
@@ -131,6 +136,7 @@ To prepare datasets on your local machine, you will need a Python environment wi
 You can also use the HPC to prepare your datasets.
 In that case, take a look at `datasets.csv`, add links and names to datasets you want to use in your benchmark and proceed further through the tutorial; instructions on dataset preparation will be given in [section 4](#hpc-benchmark).
 
+<hr>
 </details>
 
 <a name="preparing-methods"></a>
@@ -146,7 +152,7 @@ There are 3 components to this stage of configuring your benchmark:
 * `datasets.txt` lists all datasets to evaluate the methods on in the benchmark.
 
 <details>
-<summary><b>`config.json`</b></summary>
+<summary><b><i>config.json</i></b></summary>
 <br>
 
 We use `config.json` to set up hyperparameters for each tested method.
@@ -189,10 +195,11 @@ If that is not the case, you need to provide a wrapper.)
 Make sure that you do not hard-code target embedding dimensionality (`zdim_arg`) or random seed (`seed_arg`) values in the `init_args` or `fit_transform_args`.
 Also consider using the `knn_arg` specification to pass a pre-computed *k*-nearest-neighbour graph to your method (if your method needs one and allows you to compute it yourself up front).
 
+<hr>
 </details>
 
 <details>
-<summary><b>`datasets.txt`</b></summary>
+<summary><b><i>datasets.txt</i></b></summary>
 <br>
 
 `datasets.txt` contains names of datasets to include in the benchmark, separated by newlines.
@@ -201,10 +208,11 @@ If you want to prepare your datasets on the HPC cluster, the dataset names to ma
 
 You can choose not to include all the datasets in `datasets.txt`.
 
+<hr>
 </details>
 
 <details>
-<summary><b>`install/...`</b></summary>
+<summary><b><i>install/...</i></b></summary>
 <br>
 
 Each method listed in `config.json` specifies a `venv` ([virtual environment](https://docs.python.org/3/library/venv.html)) to use.
@@ -221,6 +229,7 @@ Typically, environment modules with at least a specific Python version and a cor
 
 **If you are running your benchmark locally, leave `_environment` files empty and define the full installation procedure in `_install` files.**
 
+<hr>
 </details>
 
 <a name="single-experiment"></a>
@@ -266,6 +275,7 @@ Then, after running `02b_score_method.py`, you will also find:
 
 These results can be visualised in informative plots (see [section 4](#reporting)).
 
+<hr>
 </details>
 
 
@@ -341,6 +351,7 @@ ${USE_GPU_CLUSTER}
 qstat
 ```
 
+<hr>
 </details>
 
 <details>
@@ -362,6 +373,7 @@ scp \
   ./data
 ```
 
+<hr>
 </details>
 
 <a name="reporting"></a>
@@ -381,7 +393,7 @@ In our ViVAE paper, we report results of a benchmark that we run using this fram
 In addition to the datasets in `datasets.csv` and `datasets.txt`, we use two additional interesting datasets that are not on CELLxGENE.
 
 <details>
-<summary><b>*Shekhar* mouse retina dataset</b></summary>
+<summary><b><i>Shekhar</i> mouse retina dataset</b></summary>
 <br>
 
 This dataset comprises profiles of 44,994 cells from mouse retina.
@@ -392,10 +404,11 @@ We converted it from a `SingleCellExperiment` object to an H5 readable as a Pyth
 
 **Citation:** Shekhar, K., Lapan, S. W., Whitney, I. E., Tran, N. M., Macosko, E. Z., Kowalczyk, M., … Sanes, J. R. (8 2016). *Comprehensive Classification of Retinal Bipolar Neurons by Single-Cell Transcriptomics*. Cell, 166, 1308-1323.e30. doi:10.1016/j.cell.2016.07.054
 
+<hr>
 </details>
 
 <details>
-<summary><b>*Farrell* zebrafish embryo dataset</b></summary>
+<summary><b><i>Farrell</i> zebrafish embryo dataset</b></summary>
 <br>
 
 This dataset comprises profiles of 38,731 cells gathered from zebrafish embryos.
@@ -409,6 +422,7 @@ We also used `URD_Dropseq_Meta.txt` to extract information about developmental t
 
 **Citation:** Farrell, J. A., Wang, Y., Riesenfeld, S. J., Shekhar, K., Regev, A., & Schier, A. F. (6 2018). *Single-cell reconstruction of developmental trajectories during zebrafish embryogenesis*. Science, 360. doi:10.1126/science.aar3131
 
+<hr>
 </details>
 
 <details>
@@ -419,6 +433,7 @@ We pre-process the Shekhar and Farrell datasets using the same methodology as fo
 This is because we are provided raw counts.
 To do this, see `00_prepare_dataset.ipynb` and in section 2, set `counts = True`.
 
+<hr>
 </details>
 
 <a name="limitations"></a>
@@ -445,4 +460,5 @@ Some amazing DR methods are not implemented in Python (eg. [EmbedSOM](https://bi
 * **No special treatment for deterministic algorithms.**
 This is a to-do: if a method is deterministic (eg. PCA), it should be possible to indicate this in the config file and only run it once.
 
+<hr>
 </details>

@@ -34,6 +34,7 @@ conda activate ViScore
 pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 ```
 
+<hr>
 </details>
 
 <details>
@@ -46,6 +47,7 @@ pip install pyemd==1.0.0
 pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 ```
 
+<hr>
 </details>
 
 ## Usage
@@ -56,7 +58,7 @@ pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 
 Each of these functions is documented: for example, use `help(ViScore.score)` to find out more about Local and Global SP scoring.
 
-We provide tutorials on using our DR method, [ViVAE](https://github.com/saeyslab/ViVAE), with scRNA-seq data ([here](https://colab.research.google.com/drive/163qmAKIc9CcpWSJQzo47OwIUlt9QPzE2?usp=sharing)) data and cytometry data ([here](https://github.com/saeyslab/ViVAE/blob/main/example_cytometry.ipynb)).
+We provide tutorials on using our DR method, [ViVAE](https://github.com/saeyslab/ViVAE), with scRNA-seq data ([here](https://github.com/saeyslab/ViVAE/blob/main/example_scrnaseq.ipynb)) data and cytometry data ([here](https://github.com/saeyslab/ViVAE/blob/main/example_cytometry.ipynb)).
 These tutorials include the ViScore for evaluation of results.
 
 <details>
@@ -80,6 +82,7 @@ Since the computation of an RNX curve has quadratic complexity, this approach is
 We circumvent this by approximating the RNX curve using a repeated vantage point tree-based sampling approach.
 This is implemented in `ViScore.score`.
 
+<hr>
 </details>
 
 ## Benchmarking
