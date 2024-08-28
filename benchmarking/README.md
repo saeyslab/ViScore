@@ -24,11 +24,11 @@ Dimensionality reduction (DR) is a key component in single-cell analysis workflo
 DR helps interpret complicated biological data and, in exploratory analyses, aids in hypothesis formulation.
 Despite its crucial role, DR methods remain often misinterpreted and under-evaluated.
 
-<img src="schematic.png" />
-
 **We provide an open, extensible and customisable framework benchmarking and hyperparameter optimisation of DR**, implemented in Python and Bash.
 It facilitates rapid deployment of benchmarks on high-performance computer (HPC) clusters.
 While designed primarily for scRNA-seq data, the workflow generalises to other tabular data easily.
+
+<img src="schematic.png" />
 
 <details>
 <summary><b>Challenges in evaluating DR</b></summary>
