@@ -300,7 +300,7 @@ We assume
 * `${HPC}` is the address of an HPC to which you can connect via [SSH](https://en.wikipedia.org/wiki/Secure_Shell).
 * `${DATADIR}` is the path to your data storage directory on the HPC.
 * `${WORKDIR}` is the path to your personal work/scratch directory on the HPC.
-* `${USE_CPU_CLUSTER}` and `${USE_GPU_CLUSTER}` are commands to switch to either a CPU or GPU cluster of your HPC (eg. something like `module swap cluster/cpucluster`.
+* `${USE_CPU_CLUSTER}` and `${USE_GPU_CLUSTER}` are commands to switch to either a CPU or GPU cluster of your HPC (eg. something like `module swap cluster/cpucluster`).
 
 ```bash
 ## Copy data to HPC (only if you already prepared it)
