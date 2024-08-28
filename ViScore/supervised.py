@@ -264,7 +264,9 @@ def neighbourhood_composition_plot(
         exclude:        Optional[list] = None,
         ax =            None,
         palette:        list = PALETTE,
-        bbox_to_anchor: tuple = (1.8,1.25)
+        bbox_to_anchor: tuple = (1.8,1.25),
+        show:           bool = True
+
 ):
     """
     Create neighbourhood composition plot
@@ -287,6 +289,10 @@ def neighbourhood_composition_plot(
     - figsize:        size of the resulting figure (tuple)
     - dpi:            pixel density per inch (int)
     - bbox_to_anchor: argument for matplotlib legend position (tuple)
+    - show:           whether to show the plot, in addition to returning ax object (bool)
+
+    Returns:
+    - ax: matplotlib.axes._axes.Axes object
     """
 
     if nc is None:
@@ -305,6 +311,11 @@ def neighbourhood_composition_plot(
     ax.legend(bbox_to_anchor=bbox_to_anchor)
 
     setattr(ax, 'pop_query', pop_query)
+
+    if show:
+        plt.show()
+    else:
+        plt.close()
 
     return ax
 
@@ -433,7 +444,8 @@ def plot_xnpe_barplot(
     palette:   list = PALETTE,
     figsize:   tuple = (6, 4),
     dpi:       int = 120,
-    fname:     Optional[str] = None
+    fname:     Optional[str] = None,
+    show:      bool = True
 ):
     """
     Plot xNPE results as a bar plot
@@ -441,9 +453,13 @@ def plot_xnpe_barplot(
     - res:       xNPE results from one or more methods evaluated on the same dataset (list)
     - res_names: names of methods for which the results were generated (list)
     - palette:   optional non-default palette of hex codes for colours per each labelled population (list)
-    - figsize:    tuple specifying width and height of plot in inches (tuple)
+    - figsize:   tuple specifying width and height of plot in inches (tuple)
     - dpi:       pixel density per inch if figure saved (int)
     - fname:     optional name of file to save the figure (str)
+    - show:      whether to show the plot, in addition to returning the fig,ax objects (bool)
+
+    Returns:
+    fig, ax: a matplotlib.figure.Figure object and matplotlib.axes._axes.Axes object from matplotlib.pyplot.subplots
     """
     n_res = len(res)
     pops = list(res[0].keys())
@@ -472,7 +488,12 @@ def plot_xnpe_barplot(
     if fname is not None:
         fig.savefig(fname, dpi=dpi, bbox_extra_artists=(l,), bbox_inches='tight')
 
-    plt.show()
+    if show:
+        plt.show()
+    else:
+        plt.close()
+
+    return fig,ax
 
 def plot_xnpe_map(
     proj:       np.ndarray,
@@ -484,7 +505,8 @@ def plot_xnpe_map(
     max_val:    Optional[float] = None,
     palette:    list = PALETTE,
     fname:      Optional[str] = None,
-    dpi:        int = 120
+    dpi:        int = 120,
+    show:       bool = True
 ):
     """
     Plot xNPE per population
@@ -500,6 +522,10 @@ def plot_xnpe_map(
     - palette:    optional non-default palette of hex codes for colours per each labelled population (list)
     - fname:      optional name of file to save the figure (str)
     - dpi:        pixel density per inch if figure saved (int)
+    - show:      whether to show the plot, in addition to returning the fig,axs objects (bool)
+
+    Returns:
+    fig, axs: a matplotlib.figure.Figure object and a tuple of 3 matplotlib.axes._axes.Axes objects from matplotlib.pyplot.subplots
     """
 
     ## Resolve point size
@@ -566,4 +592,9 @@ def plot_xnpe_map(
     if fname is not None:
         fig.savefig(fname, dpi=dpi, bbox_extra_artists=(l,), bbox_inches='tight')
 
-    plt.show()
+    if show:
+        plt.show()
+    else:
+        plt.close()
+
+    return fig, (ax1, ax2, cax)
