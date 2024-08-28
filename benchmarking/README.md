@@ -32,7 +32,7 @@ While designed primarily for scRNA-seq data, the workflow generalises to other t
 
 <details>
 <summary><b>Challenges in evaluating DR</b></summary>
-
+<br>
 
 The high dimensionality and sparsity of single-cell 'omics data deems the tasks of structure learning and embedding challenging.
 Additionally, evaluating the correctness of embeddings is non-trivial.
@@ -45,6 +45,7 @@ The [Open Problems in Single-Cell Analysis page](https://openproblems.bio/result
 
 <details>
 <summary><b>Objective evaluation of structure-preservation</b></summary>
+<br>
 
 When we wrote [ViVAE](https://github.com/saeyslab/ViVAE), a novel multi-scale structure-preserving DR method, we coupled it with [ViScore](https://github.com/saeyslab/ViScore), a framework for evaluation of lower-dimensional data embeddings.
 We introduced an algorithm for the efficient approximation of *RNX curves*, which quantify levels of neighbourhood structure preservation in embeddings across different scales.
@@ -55,7 +56,7 @@ Now we have an objective scoring method which quantifies local and global struct
 
 <details>
 <summary><b>Denoising of input data</b></summary>
-
+<br>
 
 We have shown that our ViVAE algorithm works better if a simple nearest-neighbour-based denoising algorithm is applied to the input data matrix.
 To isolate the effect of denoising, we run each method with non-denoised and denoised inputs, to see whether the denoising improves results for other methods.
@@ -82,7 +83,7 @@ The easiest way to acquire high-quality scRNA-seq data is to download it from a 
 
 <details>
 <summary><b>Dataset preparation steps</b></summary>
-
+<br>
 
 Preparing a dataset involves
 
@@ -114,7 +115,7 @@ In that case, if the method requires a *k*-NNG, the one constructed on de-noised
 
 <details>
 <summary><b>OPTION 1: Preparing datasets locally</b></summary>
-
+<br>
 
 To prepare datasets on your local machine, you will need a Python environment with `numpy`, `pandas`, `ViScore` and [`scanpy`](https://github.com/scverse/scanpy/tree/ad657edfb52e9957b9a93b3a16fc8a87852f3f09) installed.
 
@@ -125,7 +126,7 @@ To prepare datasets on your local machine, you will need a Python environment wi
 
 <details>
 <summary><b>OPTION 2: Preparing datasets on HPC cluster</b></summary>
-
+<br>
 
 You can also use the HPC to prepare your datasets.
 In that case, take a look at `datasets.csv`, add links and names to datasets you want to use in your benchmark and proceed further through the tutorial; instructions on dataset preparation will be given in [section 4](#hpc-benchmark).
@@ -146,7 +147,7 @@ There are 3 components to this stage of configuring your benchmark:
 
 <details>
 <summary><b>`config.json`</b></summary>
-
+<br>
 
 We use `config.json` to set up hyperparameters for each tested method.
 This is already set up for you, but you can modify or extend it.
@@ -192,7 +193,7 @@ Also consider using the `knn_arg` specification to pass a pre-computed *k*-neare
 
 <details>
 <summary><b>`datasets.txt`</b></summary>
-
+<br>
 
 `datasets.txt` contains names of datasets to include in the benchmark, separated by newlines.
 If you have already prepared your datasets locally, the dataset names need to match corresponding file names.
@@ -204,7 +205,7 @@ You can choose not to include all the datasets in `datasets.txt`.
 
 <details>
 <summary><b>`install/...`</b></summary>
-
+<br>
 
 Each method listed in `config.json` specifies a `venv` ([virtual environment](https://docs.python.org/3/library/venv.html)) to use.
 Each virtual environment needs instructions for installing required Python modules in it: these need to be in the corresponding `./install/${venv}_install.sh` file.
@@ -232,6 +233,7 @@ You will need to run the `02a_run_method.py` and `02b_score_method.py` scripts f
 
 <details>
 <summary><b>Required arguments to run a single experiment</b></summary>
+<br>
 
 You will need to specify
 
@@ -281,7 +283,7 @@ On the HPC, we will be calling the following scripts:
 
 <details>
 <summary><b>Scheduling a full benchmark</b></summary>
-
+<br>
 
 We assume
 
@@ -343,7 +345,7 @@ qstat
 
 <details>
 <summary><b>Copying results</b></summary>
-
+<br>
 
 After your benchmark finishes, you can simply copy its results to your machine.
 In addition to this, you will probably want to download the manually assigned cell population labels for each dataset for plotting embeddings and k-NNGs for making neighbourhood composition plots in ViScore.
@@ -380,7 +382,7 @@ In addition to the datasets in `datasets.csv` and `datasets.txt`, we use two add
 
 <details>
 <summary><b>*Shekhar* mouse retina dataset</b></summary>
-
+<br>
 
 This dataset comprises profiles of 44,994 cells from mouse retina.
 We picked this dataset because it includes a wide range of annotated populations and it includes a known batch effect, which causes some embeddings to mis-embed some cell populations by exaggerating the technical source variation, relative to biological variation.
@@ -394,7 +396,7 @@ We converted it from a `SingleCellExperiment` object to an H5 readable as a Pyth
 
 <details>
 <summary><b>*Farrell* zebrafish embryo dataset</b></summary>
-
+<br>
 
 This dataset comprises profiles of 38,731 cells gathered from zebrafish embryos.
 We picked this dataset because it includes annotation of ordered developmental stages represented by different cells.
@@ -411,7 +413,7 @@ We also used `URD_Dropseq_Meta.txt` to extract information about developmental t
 
 <details>
 <summary><b>Pre-processing of the additional datasets</b></summary>
-
+<br>
 
 We pre-process the Shekhar and Farrell datasets using the same methodology as for the other ones, except that we **normalise and log-scale the Shekhar data** first.
 This is because we are provided raw counts.
@@ -427,7 +429,7 @@ If you use our framework and find yourself having to make significant adjustment
 
 <details>
 <summary><b>Current limitations</b></summary>
-
+<br>
 
 * **`sklearn`-like API requirement.**
 Each method used needs to have a model class with a constructor and `.fit_transform` method.

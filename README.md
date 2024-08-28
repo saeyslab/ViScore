@@ -25,7 +25,7 @@ On Windows, use Anaconda Prompt.
 
 <details>
 <summary><b>Stand-alone installation</b></summary>
-
+<br>
 
 ```bash
 conda create --name ViScore --channel conda-forge python=3.11.7 \
@@ -38,7 +38,7 @@ pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 
 <details>
 <summary><b>Shared environment with ViVAE</b></summary>
-
+<br>
 
 ```bash
 conda activate ViVAE
@@ -61,7 +61,7 @@ These tutorials include the ViScore for evaluation of results.
 
 <details>
 <summary><b>Objective structure-preservation scoring</b></summary>
-
+<br>
 
 ViScore enables unsupervised assessment of structure preservation in LD embeddings of HD data using scores based on RNX curves.
 This is an objective approach based on quantifying neighbourhood preservation between HD and LD for all neighbourhood scales.
