@@ -24,7 +24,7 @@ On Linux or macOS, use the command line for installation.
 On Windows, use Anaconda Prompt.
 
 <details>
-<summary>Stand-alone installation</summary>
+<summary><b>Stand-alone installation</b></summary>
 
 
 ```bash
@@ -37,7 +37,7 @@ pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 </details>
 
 <details>
-<summary>Shared environment with ViVAE</summary>
+<summary><b>Shared environment with ViVAE</b></summary>
 
 
 ```bash
@@ -60,7 +60,7 @@ We provide tutorials on using our DR method, [ViVAE](https://github.com/saeyslab
 These tutorials include the ViScore for evaluation of results.
 
 <details>
-<summary>Objective structure-preservation scoring</summary>
+<summary><b>Objective structure-preservation scoring</b></summary>
 
 
 ViScore enables unsupervised assessment of structure preservation in LD embeddings of HD data using scores based on RNX curves.
