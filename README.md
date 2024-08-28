@@ -23,20 +23,30 @@ We recommend creating a new Anaconda environment for ViScore, or using the one y
 On Linux or macOS, use the command line for installation.
 On Windows, use Anaconda Prompt.
 
-```bash
-## Stand-alone:
+<details>
+<summary>Stand-alone installation</summary>
 
+
+```bash
 conda create --name ViScore --channel conda-forge python=3.11.7 \
     numpy==1.26.3 numba==0.59.0 matplotlib==3.8.2 scipy==1.12.0 pynndescent==0.5.11 scikit-learn==1.4.0 pyemd==1.0.0
 conda activate ViScore
 pip install --upgrade git+https://github.com/saeyslab/ViScore.git
+```
 
-## Shared with ViVAE:
+</details>
 
+<details>
+<summary>Shared environment with ViVAE</summary>
+
+
+```bash
 conda activate ViVAE
 pip install pyemd==1.0.0
 pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 ```
+
+</details>
 
 ## Usage
 
@@ -49,7 +59,9 @@ Each of these functions is documented: for example, use `help(ViScore.score)` to
 We provide tutorials on using our DR method, [ViVAE](https://github.com/saeyslab/ViVAE), with scRNA-seq data ([here](https://colab.research.google.com/drive/163qmAKIc9CcpWSJQzo47OwIUlt9QPzE2?usp=sharing)) data and cytometry data ([here](https://github.com/saeyslab/ViVAE/blob/main/example_cytometry.ipynb)).
 These tutorials include the ViScore for evaluation of results.
 
-## Objective structure-preservation scoring: how does it work?
+<details>
+<summary>Objective structure-preservation scoring</summary>
+
 
 ViScore enables unsupervised assessment of structure preservation in LD embeddings of HD data using scores based on RNX curves.
 This is an objective approach based on quantifying neighbourhood preservation between HD and LD for all neighbourhood scales.
@@ -67,6 +79,8 @@ Both of these values are bounded by -1 and 1 (higher is better), where 0 corresp
 Since the computation of an RNX curve has quadratic complexity, this approach is impractical or impossible to apply to larger datasets.
 We circumvent this by approximating the RNX curve using a repeated vantage point tree-based sampling approach.
 This is implemented in `ViScore.score`.
+
+</details>
 
 ## Benchmarking
 
