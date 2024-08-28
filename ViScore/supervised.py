@@ -262,7 +262,6 @@ def neighbourhood_composition_plot(
         k:              Optional[int] = 1000,
         stepsize:       Optional[int] = 10,
         exclude:        Optional[list] = None,
-        ax =            None,
         palette:        list = PALETTE,
         bbox_to_anchor: tuple = (1.8,1.25),
         show:           bool = True
@@ -284,15 +283,14 @@ def neighbourhood_composition_plot(
     - k:              (if `nc` not provided) neighbourhood size (int)
     - stepsize:       (if `nc` not provided) size of bin to aggregate over (int)
     - exclude:        (if `nc` not provided) optional populations to exclude from the count (list)
-    - ax:             optional matplotlib subplot to use for the plotting (mpl.axes._subplots.AxesSubplot)
     - palette:        optional alternative colour palette (list)
     - figsize:        size of the resulting figure (tuple)
     - dpi:            pixel density per inch (int)
     - bbox_to_anchor: argument for matplotlib legend position (tuple)
-    - show:           whether to show the plot, in addition to returning ax object (bool)
+    - show:           whether to show the plot, in addition to returning the fig,ax objects (bool)
 
     Returns:
-    - ax: matplotlib.axes._axes.Axes object
+    fig, ax: a matplotlib.figure.Figure object and matplotlib.axes._axes.Axes object from matplotlib.pyplot.subplots
     """
 
     if nc is None:
@@ -304,8 +302,8 @@ def neighbourhood_composition_plot(
         pop_query, pops_ref, _, proportions, x = nc
 
     ## Create stacked area plot
-    if ax is None:
-        ax = plt
+    fig, ax = plt.subplots()
+
     y = np.vstack(proportions)
     ax.stackplot(x, y.T, labels=pops_ref, colors=palette)
     ax.legend(bbox_to_anchor=bbox_to_anchor)
@@ -317,7 +315,7 @@ def neighbourhood_composition_plot(
     else:
         plt.close()
 
-    return ax
+    return fig,ax
 
 def xnpe(
     hd:                  np.ndarray,
