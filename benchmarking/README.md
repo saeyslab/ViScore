@@ -2,7 +2,7 @@
 
 **Corresponding author:** [David Novak](https://github.com/davnovak)
 
-**Corresponding citation (will soon be updated with revised version):** Novak, D., de Bodt, C., Lambert, P., Lee, J. A., Van Gassen, S., & Saeys, Y. (2023). A framework for quantifiable local and global structure preservation in single-cell dimensionality reduction. bioRxiv. doi:10.1101/2023.11.23.568428
+**Citation (will soon be updated to revised version):** Novak, D., de Bodt, C., Lambert, P., Lee, J. A., Van Gassen, S., & Saeys, Y. (2023). A framework for quantifiable local and global structure preservation in single-cell dimensionality reduction. bioRxiv. doi:10.1101/2023.11.23.568428
 
 This document will guide you through the deployment of single-cell dimensionality reduction benchmarks on an HPC cluster.
 
@@ -11,7 +11,7 @@ This document will guide you through the deployment of single-cell dimensionalit
 1. [Preparing datasets](#preparing-datasets)
 2. [Preparing methods](#preparing-methods)
 3. [Running a single experiment](#single-experiment)
-4. [Running a full benchmark on an HPC cluster](#hpc-benchmark)
+4. [Benchmark on an HPC cluster](#hpc-benchmark)
 5. [Reporting results](#reporting)
 6. [*ViVAE* benchmark specifications](#vivae-benchmark)
 7. [Limitations of this framework](#limitations)
@@ -67,14 +67,15 @@ This can be omitted.
 <hr>
 </details>
 
-ViScore is easy to use directly on your local machine with any DR embeddings, and we provide [code examples](https://github.com/saeyslab/ViVAE/blob/main/example_scrnaseq.ipynb) to do so.
+ViScore is easy to use directly on your local machine with any DR embeddings, and we provide code examples for doing so in the [ViVAE GitHub repository](https://github.com/saeyslab/ViVAE).
 We also give instructions on running the benchmark locally throughout this tutorial.
 However, larger evaluations should be run on HPC clusters.
 This framework is mainly for users with access to one.
 
 You will need to adapt some code to get things running with your set-up, but we did most of the work for you.
 
-**This framework is written for a Unix(-like) OS (Linux, macOS) with Bash (>=3.2) and [`jq`](https://jqlang.github.io/jq/).**
+**This framework is written for a Unix(-like) OS (Linux, macOS) with Bash (>=3.2) and [`jq`](https://jqlang.github.io/jq/).
+It is light-weight and independent of Snakemake or NextFlow.**
 
 <a name="preparing-datasets"></a>
  
@@ -281,7 +282,7 @@ These results can be visualised in informative plots (see [section 4](#reporting
 
 <a name="hpc-benchmark"></a>
 
-## **4.** Running a full benchmark on an HPC cluster
+## **4.** Benchmark on an HPC cluster
 
 With your benchmark set up, you can migrate your files to the HPC and schedule all benchmarking jobs.
 
@@ -305,7 +306,7 @@ We assume
 ```bash
 ## Copy data to HPC (only if you already prepared it)
 
-scp -r ./data ${HPC}:${DATADIR}
+scp -a ./data/. ${HPC}:${DATADIR}
 
 ## Copy scripts and configuration files to HPC
 
@@ -340,9 +341,11 @@ eval ${USE_GPU_CLUSTER}
 ./03_schedule_benchmark.sh -c GPU -i ${DATADIR}
 ```
 
-Note that all 3 scripts also allow you to specify amount of computational resources to request (use `--help` to see all arguments).
+(Upon running `03_schedule_benchmark.sh`, names of separate jobs are printed as they get submitted.)
 
-To check on your jobs, run:
+Note that all 3 `.sh` scripts also allow you to specify amount of computational resources to request (use `--help` to see all arguments).
+
+To check on your running jobs, run:
 
 ```bash
 ${USE_CPU_CLUSTER}
@@ -355,7 +358,30 @@ qstat
 </details>
 
 <details>
-<summary><b>Copying results</b></summary>
+<summary><b>Checking for errors</b></summary>
+<br>
+
+Running `03_schedule_benchmark.sh` creates a `logs` directory.
+This is where output and error logs for each job are written.
+
+Two of the most likely errors you might encounter are lack of CPU memory and lack of disk space.
+To increase amount of requested RAM, use the `-m` flag when running `03_schedule_benchmark.sh` to specify a number of GB (16 is default).
+To increase diskspace, delete files or consider running the benchmark in stages (batches by datasets, downloading results after each stage).
+
+While `03_schedule_benchmark.sh` is the easy way to run experiments, you can schedule a single experiment as well.
+Check out all options for that using `./03_schedule_experiment.sh --help`.
+As an example, to schedule 5 runs (`-s`) of UMAP (`-M`) on the *Reed* dataset (`-D`) with no de-noising (`-u`) using 32 GB of RAM (`-m`) with a walltime of 45 minutes (`-w`), run:
+
+```bash
+${USE_CPU_CLUSTER}
+./03_schedule_experiment.sh -M UMAP -D Reed -c CPU -z 2 -u 0 -s 5 -i ${DATADIR} -m 32 -w 0:45:0
+```
+
+<hr>
+</details>
+
+<details>
+<summary><b>Downloading benchmark results</b></summary>
 <br>
 
 After your benchmark finishes, you can simply copy its results to your machine.
@@ -372,6 +398,23 @@ scp \
   ${HPC}:${DATADIR}/\*_unassigned.npy \
   ./data
 ```
+
+<hr>
+</details>
+
+<details>
+<summary><b>(Re-)running parts of a benchmark</b></summary>
+<br>
+
+It is possible to extend your benchmark design or re-run one part of the benchmark, without re-running everything.
+
+To add new datasets to your benchmark, either copy the prepared datsets to your data directory or include them in `datasets.csv` and `datasets.txt` and re-run `02_schedule_dataset_preparation.sh` with its original arguments.
+To re-run experiments with a limited subset of datasets, just edit `datasets.txt` to contain only the names of those relevant datasets.
+After this, continue to `03_schedule_benchmark.sh`.
+
+To add new DR set-ups to your benchmark, modify the `config.json` file and `install` files accordingly, and do not include set-ups in `config.json` that have already been fully tested.
+If new virtual environments need to be included, re-run the `01_schedule_venv_creation.sh` step.
+After this, continue to `03_schedule_benchmark.sh`.
 
 <hr>
 </details>

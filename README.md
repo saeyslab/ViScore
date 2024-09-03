@@ -58,8 +58,8 @@ pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 
 Each of these functions is documented: for example, use `help(ViScore.score)` to find out more about Local and Global SP scoring.
 
-We provide tutorials on using our DR method, [ViVAE](https://github.com/saeyslab/ViVAE), with scRNA-seq data ([here](https://github.com/saeyslab/ViVAE/blob/main/example_scrnaseq.ipynb)) data and cytometry data ([here](https://github.com/saeyslab/ViVAE/blob/main/example_cytometry.ipynb)).
-These tutorials include the ViScore for evaluation of results.
+We provide tutorials on using our DR method, ViVAE, with scRNA-seq and cytometry data in the [ViVAE GitHub repository](https://github.com/saeyslab/ViVAE).
+These tutorials also use ViScore for evaluation of results.
 
 <details>
 <summary><b>Objective structure-preservation scoring</b></summary>
@@ -87,7 +87,7 @@ This is implemented in `ViScore.score`.
 
 ## Benchmarking
 
-You can find our documented benchmarking set-up for comparing DR methods on scRNA-seq data in the [`benchmarking` directory](https://github.com/saeyslab/ViScore/blob/main/benchmarking).
+You can find our documented benchmarking set-up for comparing DR methods on scRNA-seq data in the `benchmarking` directory.
 
 <img src="benchmarking/schematic.png" />
 

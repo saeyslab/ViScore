@@ -119,6 +119,34 @@
                 "k": ""
             }
         },
+        "PHATE": {
+            "venv": "PHATE",
+            "cluster": "CPU",
+            "package": "phate",
+            "model_class": "PHATE",
+            "init_args": {
+            },
+            "fit_transform_args": {
+            },
+            "xdim_arg": {
+                "method": "",
+                "name": ""
+            },
+            "zdim_arg": {
+                "method": "init",
+                "name": "n_components"
+            },
+            "seed_arg": {
+                "method": "init",
+                "name": "random_state"
+            },
+            "knn_arg": {
+                "method": "",
+                "name": "",
+                "format": "",
+                "k": ""
+            }
+        },
         "PaCMAP": {
             "venv": "PaCMAP",
             "cluster": "CPU",
