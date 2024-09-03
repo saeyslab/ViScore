@@ -1,4 +1,4 @@
-<img src="./logo.png" alt="ViScore" width="450"/>
+<img src="./logo.png" alt="ViScore" width="250"/>
 
 ViScore (*vee-score*) is a toolkit for evaluating and benchmarking dimensionality reduction.
 
