@@ -1,8 +1,10 @@
-<img src="./ViScore_logo_small.png" alt="ViScore" width="450"/>
+<img src="./logo.png" alt="ViScore" width="450"/>
 
 ViScore (*vee-score*) is a toolkit for evaluating and benchmarking dimensionality reduction.
 
 It is published together with [ViVAE](https://github.com/saeyslab/ViVAE), a tool for single-cell data denoising and dimensionality reduction.
+
+<img src="./overview.png" alt="overview" width="900"/>
 
 ## Why use ViScore
 
@@ -47,7 +49,6 @@ pip install pyemd==1.0.0
 pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 ```
 
-<hr>
 </details>
 
 ## Usage
@@ -82,7 +83,6 @@ Since the computation of an RNX curve has quadratic complexity, this approach is
 We circumvent this by approximating the RNX curve using a repeated vantage point tree-based sampling approach.
 This is implemented in `ViScore.score`.
 
-<hr>
 </details>
 
 ## Benchmarking
@@ -96,4 +96,4 @@ You can find our documented benchmarking set-up for comparing DR methods on scRN
 The pre-print of our publication is available [here](https://www.biorxiv.org/content/10.1101/2023.11.23.568428v2) on bioRxiv.
 
 It describes underlying methodology of ViVAE and ViScore, reviews past work in dimensionality reduction and evaluation of it and links to publicly available datasets on which performance of ViVAE was evaluated.
-**We are heavily revising this pre-print.**
+**We are heavily re-working this pre-print.**
