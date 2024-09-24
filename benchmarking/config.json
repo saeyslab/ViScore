@@ -119,34 +119,6 @@
                 "k": ""
             }
         },
-        "PHATE": {
-            "venv": "PHATE",
-            "cluster": "CPU",
-            "package": "phate",
-            "model_class": "PHATE",
-            "init_args": {
-            },
-            "fit_transform_args": {
-            },
-            "xdim_arg": {
-                "method": "",
-                "name": ""
-            },
-            "zdim_arg": {
-                "method": "init",
-                "name": "n_components"
-            },
-            "seed_arg": {
-                "method": "init",
-                "name": "random_state"
-            },
-            "knn_arg": {
-                "method": "",
-                "name": "",
-                "format": "",
-                "k": ""
-            }
-        },
         "PaCMAP": {
             "venv": "PaCMAP",
             "cluster": "CPU",
@@ -351,7 +323,7 @@
                 "lam_kldiv": 1.0,
                 "lam_geom": 0.0,
                 "lam_egeom": 0.0,
-                "lam_mds": 10.0,
+                "lam_mds": 100.0,
                 "mds_nsamp": 4,
                 "verbose": true 
             },
