@@ -3,6 +3,7 @@
 ViScore (*vee-score*) is a toolkit for evaluating and benchmarking dimensionality reduction.
 
 It is published together with [ViVAE](https://github.com/saeyslab/ViVAE), a tool for single-cell data denoising and dimensionality reduction.
+Check out the associated [paper](https://www.biorxiv.org/content/10.1101/2023.11.23.568428v3): *Interpretable models for scRNA-seq data embedding with multi-scale structure preservation*, where we describe and validate our methods in-depth.
 
 <img src="./overview.png" alt="overview" width="900"/>
 
@@ -16,8 +17,13 @@ It is published together with [ViVAE](https://github.com/saeyslab/ViVAE), a tool
 * ViScore helps visualise distortions of populations using **neighbourhood composition plots**.
     * Neighbourhood composition plots compare the neighbourhoods of a population in terms of neighbourhood labels, comparing low-dimensional embeddings and the high-dimensional input data.
 * We offer a **scalable benchmarking framework** powered by ViScore to compare DR methods on multiple datasets.
+    * The framework is made for deployment on HPC clusters, fully documented and minimalist (independent of Snakemake or NextFlow).
 
 ## Installation
+
+To try out ViScore without installing it locally, follow the tutorial on scRNA-seq data dimensionality reduction in the [ViVAE repository](https://github.com/saeyslab/ViVAE), which gives instructions on usage within [Google Colab](https://colab.research.google.com).
+
+<hr>
 
 ViScore is a Python package.
 We recommend creating a new Anaconda environment for ViScore, or using the one you may have already created for *ViVAE*.
@@ -53,14 +59,15 @@ pip install --upgrade git+https://github.com/saeyslab/ViScore.git
 
 ## Usage
 
+Examples of ViScore usage are shown in tutorials in the [ViVAE repository](https://github.com/saeyslab/ViVAE).
+
+<hr>
+
 * `ViScore.score` quantifies Local and Global SP without the use of labels (higher is better).
 * `ViScore.xnpe` quantifies local distortion of labelled populations (lower is better).
 * `ViScore.neighbourhood_composition_plot` shows sources of error in local embeddings of labelled populations.
 
 Each of these functions is documented: for example, use `help(ViScore.score)` to find out more about Local and Global SP scoring.
-
-We provide tutorials on using our DR method, ViVAE, with scRNA-seq and cytometry data in the [ViVAE GitHub repository](https://github.com/saeyslab/ViVAE).
-These tutorials also use ViScore for evaluation of results.
 
 <details>
 <summary><b>Objective structure-preservation scoring</b></summary>
@@ -87,13 +94,10 @@ This is implemented in `ViScore.score`.
 
 ## Benchmarking
 
-You can find our documented benchmarking set-up for comparing DR methods on scRNA-seq data in the `benchmarking` directory.
+You can find our documented benchmarking set-up for comparing DR methods on scRNA-seq data in the `benchmarking` folder in this repository.
+It takes you through the process of setting up and deploying a benchmarking (or hyperparameter tuning) workflow on a high-performance computing (HPC) cluster.
+The framework is extensible in terms of DR methods and datasets.
+
+Additionally, code to generate figures and LaTeX tables for presenting results of your benchmark is included.
 
 <img src="benchmarking/schematic.png" />
-
-## Pre-print
-
-The pre-print of our publication is available [here](https://www.biorxiv.org/content/10.1101/2023.11.23.568428v2) on bioRxiv.
-
-It describes underlying methodology of ViVAE and ViScore, reviews past work in dimensionality reduction and evaluation of it and links to publicly available datasets on which performance of ViVAE was evaluated.
-**We are heavily re-working this pre-print.**
