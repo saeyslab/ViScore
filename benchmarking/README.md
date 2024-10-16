@@ -1,8 +1,14 @@
 # Single-cell dimensionality reduction benchmarking framework
 
+<small>
 **Corresponding author:** [David Novak](https://github.com/davnovak)
 
+Terms and conditions from the ViScore [**LICENSE**](https://github.com/saeyslab/ViScore/blob/main/LICENSE) apply.
+
 **Citation:** Novak, D., de Bodt, C., Lambert, P., Lee, J. A., Van Gassen, S., & Saeys, Y. (2024). Interpretable models for scRNA-seq data embedding with multi-scale structure preservation. bioRxiv. doi:10.1101/2023.11.23.568428
+</small>
+
+<hr>
 
 This document will guide you through the deployment of single-cell dimensionality reduction benchmarks on an HPC cluster.
 
