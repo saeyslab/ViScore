@@ -23,11 +23,11 @@ This runs a repeated evaluation of a DR method with fixed settings.
 
 ## Set hard-coded
 
-OUTPUT="./results"
 CONFIG="config.json"
 
 ## Set defaults
 
+OUTPUT="./results"
 CLUSTER="CPU"
 LOGS="./logs"
 ZDIM=2
@@ -43,11 +43,12 @@ WALLTIME="1:00:00"
 
 ## Get user args
 
-while getopts ":M:D:c:l:z:u:s:i:a:n:m:g:w:h" opt; do
+while getopts ":M:D:c:o:l:z:u:s:i:a:n:m:g:w:h" opt; do
   case $opt in
     M) METHOD="${OPTARG}";;
     D) DATASET="${OPTARG}";;
     c) CLUSTER="${OPTARG}";;
+    o) OUTPUT="${OPTARG}";;
     l) LOGS="${OPTARG}";;
     z) ZDIM="${OPTARG}";;
     u) DENOISED="${OPTARG}";;

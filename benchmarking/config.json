@@ -236,7 +236,7 @@
         "VAE": {
             "venv": "ViVAE",
             "cluster": "GPU",
-            "package": "ViVAE",
+            "package": "vivae",
             "model_class": "ViVAE",
             "init_args": {
             },
@@ -303,7 +303,7 @@
         "ViVAE": {
             "venv": "ViVAE",
             "cluster": "GPU",
-            "package": "ViVAE",
+            "package": "vivae",
             "model_class": "ViVAE",
             "init_args": {
             },
@@ -340,7 +340,7 @@
         "ViVAE-EncoderOnly": {
             "venv": "ViVAE",
             "cluster": "GPU",
-            "package": "ViVAE",
+            "package": "vivae",
             "model_class": "ViVAE",
             "init_args": {
             },
