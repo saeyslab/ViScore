@@ -16,7 +16,7 @@ maintainers = [
 ]
 description = "Dimensionality reduction evaluation toolkit"
 readme = "README.md"
-requires-python = "==3.11.9"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent"
