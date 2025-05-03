@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import argparse
-import ViScore
+import viscore as vs
 
 ## Set hard-coded
 
@@ -64,7 +64,7 @@ emb = np.load(os.path.join(res_path, f'emb_seed{seed}.npy'), allow_pickle=True)
 
 if verbose:
     print('Evaluating structure preservation')
-s = ViScore.score(hd=input, ld=emb)
+s = vs.score(hd=input, ld=emb)
 sl = s['Sl']
 sg = s['Sg']
 rnx = s['RNX']
@@ -79,5 +79,5 @@ np.save(os.path.join(res_path, f'rnx_curve_seed{seed}.npy'), rnx, allow_pickle=T
 
 if verbose:
     print('Evaluating population embedding errors')
-s = ViScore.xnpe(hd=input, ld=emb, annot=labels, knn=knn)
+s = vs.xnpe(hd=input, ld=emb, annot=labels, knn=knn)
 np.save(os.path.join(res_path, f'xnpe_seed{seed}.npy'), s, allow_pickle=True)

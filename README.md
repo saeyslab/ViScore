@@ -63,11 +63,11 @@ Examples of ViScore usage are shown in tutorials in the [ViVAE repository](https
 
 <hr>
 
-* `ViScore.score` quantifies Local and Global SP without the use of labels (higher is better).
-* `ViScore.xnpe` quantifies local distortion of labelled populations (lower is better).
-* `ViScore.neighbourhood_composition_plot` shows sources of error in local embeddings of labelled populations.
+* `viscore.score` quantifies Local and Global SP without the use of labels (higher is better).
+* `viscore.xnpe` quantifies local distortion of labelled populations (lower is better).
+* `viscore.neighbourhood_composition_plot` shows sources of error in local embeddings of labelled populations.
 
-Each of these functions is documented: for example, use `help(ViScore.score)` to find out more about Local and Global SP scoring.
+Each of these functions is documented: for example, use `help(viscore.score)` to find out more about Local and Global SP scoring.
 
 <details>
 <summary><b>Objective structure-preservation scoring</b></summary>
@@ -88,7 +88,7 @@ Both of these values are bounded by -1 and 1 (higher is better), where 0 corresp
 
 Since the computation of an RNX curve has quadratic complexity, this approach is impractical or impossible to apply to larger datasets.
 We circumvent this by approximating the RNX curve using a repeated vantage point tree-based sampling approach.
-This is implemented in `ViScore.score`.
+This is implemented in `viscore.score`.
 
 </details>
 

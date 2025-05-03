@@ -17,29 +17,30 @@ usage="Schedule a full CPU/GPU benchmark of dimension reduction on HPC
 
 ## Set hard-coded
 
-OUTPUT="./results"
 CONFIG="config.json"
 ZDIMS=(2)
 DENOISEDS=(0 1)
 
 ## Set defaults
 
+OUTPUT="./results"
 CLUSTER="CPU"
 INPUT="./data"
 SAVE=0
 NRUNS=5
 LOGS="./logs"
 NODES=1
-MEMORY=32
+MEMORY=16
 GPUS=1
 PPN=2
 WALLTIME="1:00:00"
 
 ## Get user args
 
-while getopts ":c:i:a:s:l:n:m:g:p:w:h" opt; do
+while getopts ":c:o:i:a:s:l:n:m:g:p:w:h" opt; do
   case $opt in
     c) CLUSTER="${OPTARG}";;
+    o) OUTPUT="${OPTARG}";;
     i) INPUT="${OPTARG}";;
     a) SAVE="${OPTARG}";;
     s) NRUNS="${OPTARG}";;
@@ -81,6 +82,7 @@ for DATASET in "${DATASETS[@]}"; do
           -M ${METHOD} \
           -D ${DATASET} \
           -c ${CLUSTER} \
+          -o ${OUTPUT} \
           -l ${LOGS} \
           -z ${ZDIM} \
           -u ${DENOISED} \
