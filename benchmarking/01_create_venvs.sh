@@ -52,8 +52,12 @@ for VENV in "${VENVS[@]}"; do
 
     ## Create venv and install required Python modules
 
+    if [ -d "./venvs/venv_${VENV}" ]; then
+        rm -rf ./venvs/venv_${VENV}
+    fi
     python -m venv ./venvs/venv_${VENV}
     source ./venvs/venv_${VENV}/bin/activate
+    chmod +x ./install/${VENV}_install.sh
     ./install/${VENV}_install.sh
     deactivate
 
@@ -72,8 +76,13 @@ module purge
 for MODULE in "${ENV_MODULES[@]}"; do
     module load ${MODULE}
 done
+
+if [ -d "./venvs/venv_ViScore" ]; then
+    rm -rf ./venvs/venv_ViScore
+fi
 python -m venv ./venvs/venv_ViScore
 source ./venvs/venv_ViScore/bin/activate
+chmod +x ./install/ViScore_install.sh
 ./install/ViScore_install.sh
 deactivate
 module purge
