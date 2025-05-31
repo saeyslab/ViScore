@@ -131,6 +131,8 @@ To prepare datasets on your local machine, you will need a Python environment wi
 * To prepare a dataset of interest step-by-step, use `00_prepare_dataset.ipynb`.
 * To download and prepare multiple CELLxGENE datasets, run `00_prepare_datasets.py`, which reads from `datasets.csv`.
 
+**If the expression data matrix is too large to fit into memory, use `00_prepare_dataset_zarr.ipynb`.**
+
 <hr>
 </details>
 
