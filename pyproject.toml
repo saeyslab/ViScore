@@ -16,7 +16,6 @@ maintainers = [
 ]
 description = "Dimensionality reduction evaluation toolkit"
 readme = "README.md"
-requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent"
@@ -25,13 +24,13 @@ license = { file = "LICENSE" }
 
 dependencies = [
     "numba==0.59.0",
-    "scipy==1.14",
-    "pynndescent==0.5.11",
-    "scanpy==1.10",
-    "numpy==1.26.3",
-    "pandas==2.0.3",
-    "matplotlib==3.9",
-    "scikit-learn==1.6",
+    "scipy>=1.14",
+    "pynndescent>=0.5.11",
+    "scanpy>=1.10",
+    "numpy>=1.26.3",
+    "pandas>=2.0.3",
+    "matplotlib>=3.9",
+    "scikit-learn>=1.6",
     "pyemd==1.0.0"
 ]
 
