@@ -1,5 +1,7 @@
 <img src="./logo.png" alt="ViScore" width="250"/>
 
+[![DOI](https://zenodo.org/badge/707237183.svg)](https://doi.org/10.5281/zenodo.22310523)
+
 ViScore (*vee-score*) is a toolkit for evaluating and benchmarking dimensionality reduction.
 
 It is published together with **[ViVAE](https://github.com/saeyslab/ViVAE)**, a tool for single-cell data denoising and dimensionality reduction.
